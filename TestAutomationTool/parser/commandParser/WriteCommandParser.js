@@ -1,6 +1,10 @@
-var WriteCommandParser = {};
+var command = null;
 
-WriteCommandParser.parseToCypress = (command) => {
+function WriteCommandParser(commandIn) {
+    command = commandIn;
+};
+
+WriteCommandParser.prototype.parseToCypress = (command) => {
     return `cy.get('${command.locator}').type('${command.text}')`;
 };
 
