@@ -5,8 +5,4 @@ function Command(obj) {
     this.expectedText = obj.expectedText;
 }
 
-Command.prototype.fooBar = function () {
-
-};
-
 module.exports = Command;

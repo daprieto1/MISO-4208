@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 var program = require('commander');
-var Command = require('./models/command');
+var Command = require('./models/Command');
 var Parser = require('./parser/Parser');
 
 var actions = [
