@@ -5,8 +5,22 @@ var Parser = require('./parser/Parser');
 
 var actions = [
     {
+        "action": "clear",
+        "locator": "//"
+    },
+    {
         "action": "click",
         "locator": "//"
+    },
+    {
+        "action": "write",
+        "locator": "//",
+        "text": ""
+    },
+    {
+        "action": "validateText",
+        "locator": "//",
+        "expectedText": ""
     }
 ];
 

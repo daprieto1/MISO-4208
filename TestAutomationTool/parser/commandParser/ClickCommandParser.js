@@ -4,8 +4,7 @@ function ClickCommandParser(commandIn) {
     command = commandIn;
 };
 
-ClickCommandParser.prototype.parseToCypress = () => {    
-    console.log(command);
+ClickCommandParser.prototype.parseToCypress = () => {        
     return `cy.get('${command.locator}').click()`;
 };
 
