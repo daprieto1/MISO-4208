@@ -4,7 +4,7 @@ function ClearCommandParser(commandIn) {
     command = commandIn;
 };
 
-ClearCommandParser.prototype.parseToCypress = (command) => {
+ClearCommandParser.prototype.parseToCypress = () => {
     return `cy.get('${command.locator}').clear()`;
 };
 
