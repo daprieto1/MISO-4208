@@ -1,6 +1,10 @@
-var ValidateTextCommandParser = {};
+var command = null;
 
-ValidateTextCommandParser.parseToCypress = (command) => {
+function ValidateTextCommandParser(commandIn) {
+    command = commandIn;
+};
+
+ValidateTextCommandParser.prototype.parseToCypress = (command) => {
     return `cy.get('${command.locator}').contains('${expectedText}')`;
 };
 
