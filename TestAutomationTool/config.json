@@ -1,0 +1,33 @@
+{
+    "provider": "cypress",
+    "describe": "Los estudiantes Login",
+    "assertions": [
+        {
+            "should": "should works login",
+            "actions": [
+                {
+                    "action": "clear",
+                    "locator": "//"
+                },
+                {
+                    "action": "click",
+                    "locator": "//"
+                },
+                {
+                    "action": "write",
+                    "locator": "//",
+                    "text": ""
+                },
+                {
+                    "action": "validateText",
+                    "locator": "//",
+                    "expectedText": ""
+                },
+                {
+                    "action": "validateExistance",
+                    "locator": "//"
+                }
+            ]
+        }
+    ]
+}
