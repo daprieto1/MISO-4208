@@ -1,0 +1,18 @@
+{
+  "name": "testautomationtool",
+  "version": "1.0.0",
+  "description": "This is an app to automate test using Cypress and Nigthwatch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": "index.js",
+  "repository": {
+    "url": "https://github.com/daprieto1/MISO-4208.git"
+  },
+  "dependencies": {
+    "commander": "^2.14.1"
+  }
+}
