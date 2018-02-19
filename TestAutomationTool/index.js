@@ -1,38 +1,22 @@
 #! /usr/bin/env node
+var Utils = require('./Utils');
 var program = require('commander');
 var Command = require('./models/Command');
 var Parser = require('./parser/Parser');
-
-var actions = [
-    {
-        "action": "clear",
-        "locator": "//"
-    },
-    {
-        "action": "click",
-        "locator": "//"
-    },
-    {
-        "action": "write",
-        "locator": "//",
-        "text": ""
-    },
-    {
-        "action": "validateText",
-        "locator": "//",
-        "expectedText": ""
-    }
-];
+var Analyzer = require('./analyzer/Analizer');
 
 program
     .version('0.1.0');
 
-program.command('analyse')
+program.command('analyze')
     .description('Analyse a spec file')
     .option('-p, --path <path>', 'file path')
     .action(function (filePath) {
-        var newActions = actions.map(action => new Command(action));
-        console.log(newActions);
+        console.log('Analyze start');
+        Utils.readFile(filePath)
+            .then(data => Analyzer.analyze(data))
+            .then(provider => console.log(provider))
+            .catch(err => console.log(err));
     });
 
 program.command('parse')
@@ -40,8 +24,11 @@ program.command('parse')
     .option('-p, --path <path>', 'file path')
     .action(function (filePath) {
         console.log('Parse start');
-        var commands = actions.map(action => new Command(action));
-        Parser.parse(commands);
+        Utils.readFile(filePath)
+            .then(data => Analyzer.analyze(data))
+            .then(provider => console.log(provider))
+            .catch(err => console.log(err));
     });
 
 program.parse(process.argv);
+
