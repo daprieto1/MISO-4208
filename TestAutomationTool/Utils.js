@@ -11,4 +11,13 @@ Utils.readFile = (path) => {
     });
 };
 
+Utils.writeFile = (path, content) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, content, (err) => {
+            if (err) reject(err)
+            resolve();
+        });
+    });
+};
+
 module.exports = Utils;
