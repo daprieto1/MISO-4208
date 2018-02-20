@@ -6,8 +6,7 @@ var ValidateTextCommandParser = require('./commandParser/ValidateTextCommandPars
 var CommandParserFactory = {};
 
 CommandParserFactory.getParser = (command) => {
-    var commandParser = null;
-    console.log("ACTION ----> " + command.action);
+    var commandParser = null;    
     switch (command.action) {
         case 'click':
             commandParser = new ClickCommandParser(command);
