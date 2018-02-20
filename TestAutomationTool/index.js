@@ -30,5 +30,12 @@ program.command('parse')
             .catch(err => console.log(err));
     });
 
+program.command('installProvider')
+    .description('Install a specific framework of a Provider')
+    .option('-p, --provider <provider>', 'provider name')
+    .action(function (providerName) {
+        console.log(`Install ${providerName} start`);
+    });
+
 program.parse(process.argv);
 
