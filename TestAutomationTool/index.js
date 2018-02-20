@@ -27,6 +27,7 @@ program.command('parse')
         Utils.readFile(filePath)
             .then(data => Analyzer.analyze(data))
             .then(provider => Parser.parse(provider))
+            .then(test => console.log(test))
             .catch(err => console.log(err));
     });
 
