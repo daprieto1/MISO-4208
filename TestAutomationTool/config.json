@@ -22,10 +22,29 @@
                     "action": "validateText",
                     "locator": "//",
                     "expectedText": ""
+                }
+            ]
+        },
+        {
+            "should": "should works logout",
+            "actions": [
+                {
+                    "action": "clear",
+                    "locator": "//"
                 },
                 {
-                    "action": "validateExistance",
+                    "action": "click",
                     "locator": "//"
+                },
+                {
+                    "action": "write",
+                    "locator": "//",
+                    "text": ""
+                },
+                {
+                    "action": "validateText",
+                    "locator": "//",
+                    "expectedText": ""
                 }
             ]
         }

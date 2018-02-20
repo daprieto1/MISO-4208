@@ -7,6 +7,7 @@ var CommandParserFactory = {};
 
 CommandParserFactory.getParser = (command) => {
     var commandParser = null;
+    console.log("ACTION ----> " + command.action);
     switch (command.action) {
         case 'click':
             commandParser = new ClickCommandParser(command);
