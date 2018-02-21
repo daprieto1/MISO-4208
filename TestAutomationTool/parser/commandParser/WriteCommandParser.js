@@ -1,15 +1,13 @@
-var command = null;
-
 function WriteCommandParser(commandIn) {
-    command = commandIn;
-};
+    this.command = commandIn;
 
-WriteCommandParser.prototype.parseToCypress = () => {
-    return `cy.get('${command.locator}').type('${command.text}')`;
-};
+    this.parseToCypress = () => {
+        return `cy.get('${this.command.locator}').type('${this.command.text}')`;
+    };
 
-WriteCommandParser.prototype.parseToNigthwatch = () => {
-    return `.setValue('${command.locator}', '${command.text}')`;
+    this.parseToNigthwatch = () => {
+        return `.setValue('${this.command.locator}', '${this.command.text}')`;
+    };
 };
 
 module.exports = WriteCommandParser;

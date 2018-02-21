@@ -1,15 +1,13 @@
-var command = null;
-
 function ClearCommandParser(commandIn) {
-    command = commandIn;
-};
+    this.command = commandIn;
 
-ClearCommandParser.prototype.parseToCypress = () => {
-    return `cy.get('${command.locator}').clear()`;
-};
+    this.parseToCypress = () => {
+        return `cy.get('${this.command.locator}').clear()`;
+    };
 
-ClearCommandParser.prototype.parseToNigthwatch = () => {
-    return ``;
+    this.parseToNigthwatch = () => {
+        return ``;
+    };
 };
 
 module.exports = ClearCommandParser;

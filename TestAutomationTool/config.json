@@ -1,27 +1,32 @@
 {
     "providerName": "cypress",
-    "describe": "Los estudiantes Login",
+    "describe": "Dolibar Login",
     "assertions": [
         {
-            "should": "should works login",
+            "should": "should fail login",
             "actions": [
                 {
-                    "action": "clear",
-                    "locator": "//"
-                },
-                {
-                    "action": "click",
-                    "locator": "//"
+                    "action": "goTo",
+                    "url": "http://andes.on.dolicloud.com/"
                 },
                 {
                     "action": "write",
-                    "locator": "//",
-                    "text": ""
+                    "locator": "#username",
+                    "text": "wrongUser"
+                },
+                {
+                    "action": "write",
+                    "locator": "#password",
+                    "text": "wrongPassword"
+                },
+                {
+                    "action": "click",
+                    "locator": "input.button"
                 },
                 {
                     "action": "validateText",
                     "locator": "//",
-                    "expectedText": ""
+                    "expectedText": "ErrorBadLoginPassword"
                 }
             ]
         },

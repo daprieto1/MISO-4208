@@ -1,15 +1,13 @@
-var command = null;
-
 function ClickCommandParser(commandIn) {
-    command = commandIn;
-};
+    this.command = commandIn;
 
-ClickCommandParser.prototype.parseToCypress = () => {        
-    return `cy.get('${command.locator}').click()`;
-};
+    this.parseToCypress = () => {
+        return `cy.get('${this.command.locator}').click()`;
+    };
 
-ClickCommandParser.prototype.parseToNigthwatch = () => {
-    return `.click('${command.locator}')`;
+    this.parseToNigthwatch = () => {
+        return `.click('${this.command.locator}')`;
+    };
 };
 
 module.exports = ClickCommandParser;

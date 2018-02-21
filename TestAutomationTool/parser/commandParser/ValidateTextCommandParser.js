@@ -1,14 +1,13 @@
-var command = null;
-
 function ValidateTextCommandParser(commandIn) {
-    command = commandIn;
+    this.command = commandIn;
+
+    this.parseToCypress = () => {
+        return `cy.contains('${this.command.expectedText}')`;
+    };
+
+    this.parseToNigthwatch = () => {
+        return `.assert.containsText('${this.command.locator}', '${this.command.expectedText}')`;
+    };
 };
 
-ValidateTextCommandParser.prototype.parseToCypress = () => {
-    return `cy.get('${command.locator}').contains('${command.expectedText}')`;
-};
-
-ValidateTextCommandParser.prototype.parseToNigthwatch = () => {
-    return `.assert.containsText('${command.locator}', '${command.expectedText}')`;
-};
 module.exports = ValidateTextCommandParser;
