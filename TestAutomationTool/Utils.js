@@ -1,4 +1,5 @@
 var fs = require('fs');
+var nrc = require('node-run-cmd');
 
 var Utils = {};
 
@@ -18,6 +19,14 @@ Utils.writeFile = (path, content) => {
             resolve();
         });
     });
+};
+
+Utils.executeCommand = command => {
+    var dataCallback = function (data) {
+        console.log(data);
+    };
+    console.log(command);
+    nrc.run(command, { onData: dataCallback });
 };
 
 module.exports = Utils;

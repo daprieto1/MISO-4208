@@ -13,6 +13,8 @@
     "url": "https://github.com/daprieto1/MISO-4208.git"
   },
   "dependencies": {
-    "commander": "^2.14.1"
+    "commander": "^2.14.1",
+    "cypress": "^2.0.2",
+    "node-run-cmd": "^1.0.1"
   }
 }

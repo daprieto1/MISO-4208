@@ -24,19 +24,28 @@ program.command('parse')
     .option('-p, --path <path>', 'file path')
     .action(function (filePath) {
         console.log('Parse start');
+        var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/cypress/integration/test${(new Date()).getTime()}.js`;
         Utils.readFile(filePath)
             .then(data => Analyzer.analyze(data))
             .then(provider => Parser.parse(provider))
-            .then(test => Utils.writeFile(`/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/tests/test${(new Date()).getTime()}.js`, test))
-            .then()
+            .then(test => Utils.writeFile(locationPath, test))
+            .then(() => console.log(`The file has been generated in ${locationPath}`))
             .catch(err => console.log(err));
     });
 
-program.command('installProvider')
-    .description('Install a specific framework of a Provider')
-    .option('-p, --provider <provider>', 'provider name')
-    .action(function (providerName) {
-        console.log(`Install ${providerName} start`);
+program.command('execute')
+    .description('Parse a spec file')
+    .option('-p, --path <path>', 'file path')
+    .action(function (filePath) {
+        console.log('Parse start');
+        var fileName = `cypress/integration/test${(new Date()).getTime()}.js`;
+        var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/${fileName}`;
+        Utils.readFile(filePath)
+            .then(data => Analyzer.analyze(data))
+            .then(provider => Parser.parse(provider))
+            .then(test => Utils.writeFile(locationPath, test))
+            .then(() => Utils.executeCommand(`cypress run --spec ${fileName}`))
+            .catch(err => console.log(err));
     });
 
 program.parse(process.argv);
