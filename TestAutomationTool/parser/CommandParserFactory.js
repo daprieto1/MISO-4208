@@ -1,6 +1,7 @@
 var ClickCommandParser = require('./commandParser/ClickCommandParser');
 var ClearCommandParser = require('./commandParser/ClearCommandParser');
 var WriteCommandParser = require('./commandParser/WriteCommandParser');
+var NavigateCommandParser = require('./commandParser/NavigateCommandParser');
 var ValidateTextCommandParser = require('./commandParser/ValidateTextCommandParser');
 
 var CommandParserFactory = {};
@@ -8,6 +9,9 @@ var CommandParserFactory = {};
 CommandParserFactory.getParser = (command) => {
     var commandParser = null;    
     switch (command.action) {
+        case 'goTo':
+            commandParser = new NavigateCommandParser(command);
+            break;
         case 'click':
             commandParser = new ClickCommandParser(command);
             break;
