@@ -1,8 +1,7 @@
 function GoToCommandParser(commandIn) {
     this.command = commandIn;
 
-    this.parseToCypress = () => {   
-        console.log('YEAH');     
+    this.parseToCypress = () => {           
         return `cy.visit('${this.command.url}')`;
     };
 

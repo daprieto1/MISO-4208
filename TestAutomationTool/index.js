@@ -27,7 +27,8 @@ program.command('parse')
         Utils.readFile(filePath)
             .then(data => Analyzer.analyze(data))
             .then(provider => Parser.parse(provider))
-            .then(test => console.log(test))
+            .then(test => Utils.writeFile(`/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/tests/test${(new Date()).getTime()}.js`, test))
+            .then()
             .catch(err => console.log(err));
     });
 
