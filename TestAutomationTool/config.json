@@ -1,5 +1,4 @@
-{
-    "providerName": "cypress",
+{    
     "describe": "Dolibar Login",
     "assertions": [
         {

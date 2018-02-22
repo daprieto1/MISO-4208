@@ -11,10 +11,11 @@ program
 program.command('analyze')
     .description('Analyse a spec file')
     .option('-p, --path <path>', 'file path')
-    .action(function (filePath) {
+    .option('-pr, --provider <provider>', 'provider to use')
+    .action(function (filePath, providerName) {
         console.log('Analyze start');
         Utils.readFile(filePath)
-            .then(data => Analyzer.analyze(data))
+            .then(data => Analyzer.analyze(data, providerName))
             .then(provider => console.log(provider))
             .catch(err => console.log(err));
     });
@@ -22,11 +23,12 @@ program.command('analyze')
 program.command('parse')
     .description('Parse a spec file')
     .option('-p, --path <path>', 'file path')
-    .action(function (filePath) {
+    .option('-pr, --provider <provider>', 'provider to use')
+    .action(function (filePath, providerName) {
         console.log('Parse start');
         var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/cypress/integration/test${(new Date()).getTime()}.js`;
         Utils.readFile(filePath)
-            .then(data => Analyzer.analyze(data))
+            .then(data => Analyzer.analyze(data, providerName))
             .then(provider => Parser.parse(provider))
             .then(test => Utils.writeFile(locationPath, test))
             .then(() => console.log(`The file has been generated in ${locationPath}`))
@@ -36,12 +38,13 @@ program.command('parse')
 program.command('execute')
     .description('Parse a spec file')
     .option('-p, --path <path>', 'file path')
-    .action(function (filePath) {
+    .option('-pr, --provider <provider>', 'provider to use')
+    .action(function (filePath, providerName) {
         console.log('Parse start');
         var fileName = `cypress/integration/test${(new Date()).getTime()}.js`;
         var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/${fileName}`;
         Utils.readFile(filePath)
-            .then(data => Analyzer.analyze(data))
+            .then(data => Analyzer.analyze(data, providerName))
             .then(provider => Parser.parse(provider))
             .then(test => Utils.writeFile(locationPath, test))
             .then(() => Utils.executeCommand(`cypress run --spec ${fileName}`))
