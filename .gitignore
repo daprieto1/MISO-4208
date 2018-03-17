@@ -1,2 +1,10 @@
 TestAutomationTool/node_modules
 TestAutomationTool/package-lock.json
+TestAutomationTool/public/bower_components
+TestAutomationTool/tests
+TestAutomationTool/results
+TestAutomationTool/public/images/**/*.png
+
+TestAutomationTool/cypress/videos
+TestAutomationTool/cypress/integration
+TestAutomationTool/cypress/screenshots
