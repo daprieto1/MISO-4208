@@ -1,0 +1,21 @@
+{
+  "name": "testautomationtool",
+  "description": "This is an app to automate test using Cypress and Nigthwatch",
+  "main": "index.js",  
+  "authors": [
+    "daprieto1 <da.prieto1@uniandes.edu.co>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/daprieto1/MISO-4208",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.9",
+    "angular-ui-bootstrap": "^2.5.6"
+  }
+}

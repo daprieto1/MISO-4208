@@ -26,6 +26,7 @@ program.command('parse')
     .option('-pr, --provider <provider>', 'provider to use')
     .action(function (filePath, providerName) {
         console.log('Parse start');
+        console.log(filePath, providerName);
         var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/cypress/integration/test${(new Date()).getTime()}.js`;
         Utils.readFile(filePath)
             .then(data => Analyzer.analyze(data, providerName))

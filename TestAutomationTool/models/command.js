@@ -1,6 +1,6 @@
 function Command(obj) {
     if(!obj || !obj.action)
-        throw 'The configuration object for COmmand is not valid';
+        throw 'The configuration object for Command is not valid';
 
     this.url = obj.url;
     this.action = obj.action;

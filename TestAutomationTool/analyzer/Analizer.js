@@ -4,6 +4,7 @@ var Analizer = {};
 
 Analizer.analyze = (jsonConfig, providerName) => {
     return new Promise((resolve, reject) => {
+        console.log(`Analizer analyze start: providerName = ${providerName}`);
         try {
             var obj = JSON.parse(jsonConfig);
             obj.providerName = providerName;
