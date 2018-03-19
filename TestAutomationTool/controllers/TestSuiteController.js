@@ -2,6 +2,7 @@ var express = require('express');
 
 var TestSuiteService = require('./../services/TestSuiteService');
 var AnalizerService = require('./../services/AnalizerService');
+var ParserService = require('./../services/ParserService');
 
 var routes = function (TestSuite) {
     var testSuiteRouter = express.Router();
@@ -23,7 +24,8 @@ var routes = function (TestSuite) {
         .post((req, res) => {
             TestSuiteService.getById('5aaf2b6db8db8e2e853a3a46')
                 .then(testSuite => AnalizerService.analyze(testSuite, 'cypress'))
-                .then(provider => console.log(provider))
+                .then(provider => ParserService.parse(provider))
+                .then(data => console.log(data))
                 .catch(err => {
                     console.log(err);
                     res.status(500).send(err);
