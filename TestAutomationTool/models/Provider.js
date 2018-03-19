@@ -1,6 +1,6 @@
 var Assertion = require('./Assertion');
 
-function Provider(obj) {
+function Provider(obj, providerName) {
     if (!obj ||
         !obj.describe ||
         !obj.providerName ||

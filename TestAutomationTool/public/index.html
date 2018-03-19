@@ -2,7 +2,7 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="visualRegressionTesting">
+<html ng-app="automationTestingTool">
 
 <head>
     <!-- META -->
@@ -13,153 +13,18 @@
     <title>Automation Testing Tool</title>
 
     <!-- SCROLLS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/boostrap/dist/css/bootstrap.min.css">
     <!-- load bootstrap -->
-    <style>
-        html {
-            overflow-y: scroll;
-        }
 
-        body {
-            padding-top: 50px;
-        }
-
-        #todo-list {
-            margin-bottom: 30px;
-        }
-
-        .report {
-            margin-bottom: 20px;
-        }
-
-        img {
-            max-width: 100%
-        }
-
-        .container {
-            margin-left: 30px;
-            margin-right: 30px;
-            max-width: 2000px;
-        }
-
-        .loader {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            margin-top: 380px;
-        }
-
-        .item {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-        }
-
-        .item-1 {
-            background-color: #FA5667;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            animation: item-1_move 1.8s cubic-bezier(.6, .01, .4, 1) infinite;
-        }
-
-        .item-2 {
-            background-color: #7A45E5;
-            top: 0;
-            right: 0;
-            animation: item-2_move 1.8s cubic-bezier(.6, .01, .4, 1) infinite;
-        }
-
-        .item-3 {
-            background-color: #1B91F7;
-            bottom: 0;
-            right: 0;
-            z-index: 1;
-            animation: item-3_move 1.8s cubic-bezier(.6, .01, .4, 1) infinite;
-        }
-
-        .item-4 {
-            background-color: #FAC24C;
-            bottom: 0;
-            left: 0;
-            animation: item-4_move 1.8s cubic-bezier(.6, .01, .4, 1) infinite;
-        }
-
-        @keyframes item-1_move {
-            0%,
-            100% {
-                transform: translate(0, 0)
-            }
-            25% {
-                transform: translate(0, 100px)
-            }
-            50% {
-                transform: translate(100px, 100px)
-            }
-            75% {
-                transform: translate(100px, 0)
-            }
-        }
-
-        @keyframes item-2_move {
-            0%,
-            100% {
-                transform: translate(0, 0)
-            }
-            25% {
-                transform: translate(-100px, 0)
-            }
-            50% {
-                transform: translate(-100px, 100px)
-            }
-            75% {
-                transform: translate(0, 100px)
-            }
-        }
-
-        @keyframes item-3_move {
-            0%,
-            100% {
-                transform: translate(0, 0)
-            }
-            25% {
-                transform: translate(0, -100px)
-            }
-            50% {
-                transform: translate(-100px, -100px)
-            }
-            75% {
-                transform: translate(-100px, 0)
-            }
-        }
-
-        @keyframes item-4_move {
-            0%,
-            100% {
-                transform: translate(0, 0)
-            }
-            25% {
-                transform: translate(100px, 0)
-            }
-            50% {
-                transform: translate(100px, -100px)
-            }
-            75% {
-                transform: translate(0, -100px)
-            }
-        }
-    </style>
 
     <!-- SPELLS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- load jquery -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-    <!-- load angular -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/boostrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="core.js"></script>
 
 </head>
@@ -173,57 +38,35 @@
             <h1>Automation Testing Tool</h1>
         </div>
 
-        <div ng-hide="isExecuting">
-            <div class="row">
-                <div class="col-xs-12 col-md-12">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="execute()">Generate Report</button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h3>Base Image</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Modified Image</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Difference</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Important info</h3>
-                    </div>
-                </div>
-
-                <div class="report" ng-repeat="execution in executions">
-                    <div class="row">
-                        <div class="col-md-12">{{execution.insertionDate}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img src="{{execution.beforeImgUri}}" alt="">
-                        </div>
-                        <div class="col-md-3">
-                            <img src="{{execution.afterImgUri}}" alt="">
-                        </div>
-                        <div class="col-md-3">
-                            <img src="{{execution.comparationImgUri}}" alt="">
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                <strong>isSameDimensions:</strong> {{execution.comparation.isSameDimensions}}</p>
-                            <p>
-                                <strong>rawMisMatchPercentage:</strong> {{execution.comparation.rawMisMatchPercentage}}</p>
-                            <p>
-                                <strong>misMatchPercentage:</strong> {{execution.comparation.misMatchPercentage}}</p>
-                            <p>
-                                <strong>analysisTime:</strong> {{execution.comparation.analysisTime}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <uib-tabset>
+            <uib-tab index="0" heading="Tests Suites">
+                <table id="test-suites" class="table table-striped">
+                    <tbody>
+                        <tr ng-repeat="testSuite in testSuites">
+                            <td>
+                                <img src="" alt="">
+                            </td>
+                            <td>
+                                <p>
+                                    <strong>{{testSuite.name}}</strong>
+                                </p>
+                                <p>{{testSuite.description}}</p>
+                            </td>
+                            <td>
+                                <span class="label label-success">{{testSuite.lastExecution.state}}</span>
+                            </td>
+                            <td>
+                                {{testSuite.lastExecution.date}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+            <uib-tab index="1" heading="Create Test Suite">
+             
+            </uib-tab>
+            <uib-tab index="2" heading="Historic">Long Labeled Justified content</uib-tab>
+        </uib-tabset>
 
     </div>
 
