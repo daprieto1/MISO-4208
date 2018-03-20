@@ -5,7 +5,8 @@ TestAutomationTool/tests
 TestAutomationTool/results
 TestAutomationTool/public/images/**/*.png
 TestAutomationTool/public/results
-
 TestAutomationTool/cypress/videos
 TestAutomationTool/cypress/integration
 TestAutomationTool/cypress/screenshots
+UHabits/test_servers/*
+
