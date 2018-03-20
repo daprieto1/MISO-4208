@@ -1,7 +1,17 @@
 var fs = require('fs');
 var nrc = require('node-run-cmd');
+var parseString = require('xml2js').parseString;
 
 var UtilsService = {};
+
+UtilsService.xml2js = xml => {
+    return new Promise((resolve, reject) => {
+        parseString(xml, function (err, result) {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
 
 UtilsService.copyFile = (source, target) => {
     return new Promise((resolve, reject) => {

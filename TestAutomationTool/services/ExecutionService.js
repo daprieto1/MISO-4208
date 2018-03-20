@@ -14,6 +14,15 @@ ExecutionService.create = execution => {
     });
 }
 
+ExecutionService.update = execution => {
+    return new Promise((resolve, reject) => {
+        Execution.update({ _id: execution._id }, execution, (err, newExecution) => {
+            if (err) reject(err);
+            resolve(newExecution)
+        });
+    });
+}
+
 ExecutionService.execute = (test, testSuiteId, providerName) => {
     return new Promise((resolve, reject) => {
         var timestamp = (new Date()).getTime();
@@ -36,8 +45,8 @@ ExecutionService.execute = (test, testSuiteId, providerName) => {
         }
 
         ExecutionService.create(execution)
-            .then(newExecution => executeFunction(test, newExecution))
-            .then(completeExecution => resolve(completeExecution))
+            .then(newExecution => executeFunction(test, newExecution))            
+            .then(completeExecution => resolve(completeExecution))            
             .catch(err => reject(err));
     });
 }
@@ -49,7 +58,12 @@ function executeCypressTest(test, newExecution) {
         .then(() => Utils.executeCommand(`./node_modules/cypress-cli/bin/cypress run --spec cypress/integration/testFile.js`))
         .then(() => Utils.createFolder(targetFolder))
         .then(() => Utils.copyFile('./results/my-test-output.xml', `${targetFolder}/output.xml`))
-        .then(() => new Promise((resolve, reject) => { resolve(newExecution) }))
+        .then(() => Utils.readFile(`${targetFolder}/output.xml`))
+        .then(xmlResult => Utils.xml2js(xmlResult))
+        .then(resultdata => new Promise((resolve, reject) => {
+            newExecution.results = resultdata
+            resolve(newExecution)
+        }))
 }
 
 module.exports = ExecutionService;

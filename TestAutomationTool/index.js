@@ -1,56 +1,17 @@
 #! /usr/bin/env node
-var Utils = require('./services/UtilsService');
-var program = require('commander');
-var Command = require('./models/Command');
-var Parser = require('./parser/Parser');
-var Analyzer = require('./analyzer/Analizer');
 
-program
-    .version('0.1.0');
-
-program.command('analyze')
-    .description('Analyse a spec file')
-    .option('-p, --path <path>', 'file path')
-    .option('-pr, --provider <provider>', 'provider to use')
-    .action(function (filePath, providerName) {
-        console.log('Analyze start');
-        Utils.readFile(filePath)
-            .then(data => Analyzer.analyze(data, providerName))
-            .then(provider => console.log(provider))
-            .catch(err => console.log(err));
-    });
-
-program.command('parse')
-    .description('Parse a spec file')
-    .option('-p, --path <path>', 'file path')
-    .option('-pr, --provider <provider>', 'provider to use')
-    .action(function (filePath, providerName) {
-        console.log('Parse start');
-        console.log(filePath, providerName);
-        var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/cypress/integration/test${(new Date()).getTime()}.js`;
-        Utils.readFile(filePath)
-            .then(data => Analyzer.analyze(data, providerName))
-            .then(provider => Parser.parse(provider))
-            .then(test => Utils.writeFile(locationPath, test))
-            .then(() => console.log(`The file has been generated in ${locationPath}`))
-            .catch(err => console.log(err));
-    });
-
-program.command('execute')
-    .description('Parse a spec file')
-    .option('-p, --path <path>', 'file path')
-    .option('-pr, --provider <provider>', 'provider to use')
-    .action(function (filePath, providerName) {
-        console.log('Parse start');
-        var fileName = `cypress/integration/test${(new Date()).getTime()}.js`;
-        var locationPath = `/Users/diegoprietotorres/Documents/programs/MISO-4208/TestAutomationTool/${fileName}`;
-        Utils.readFile(filePath)
-            .then(data => Analyzer.analyze(data, providerName))
-            .then(provider => Parser.parse(provider))
-            .then(test => Utils.writeFile(locationPath, test))
-            .then(() => Utils.executeCommand(`cypress run --spec ${fileName}`))
-            .catch(err => console.log(err));
-    });
-
-program.parse(process.argv);
-
+var parseString = require('xml2js').parseString;
+var xml = `<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="5.231" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2018-03-20T03:07:06" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Dolibar Login" timestamp="2018-03-20T03:07:06" tests="2" failures="0" time="5.231">
+    <testcase name="Dolibar Login should fail login" time="3.178" classname="should fail login">
+    </testcase>
+    <testcase name="Dolibar Login should works login" time="2.053" classname="should works login">
+    </testcase>
+  </testsuite>
+</testsuites>`
+parseString(xml, function (err, result) {
+    console.dir(JSON.stringify(result));
+});

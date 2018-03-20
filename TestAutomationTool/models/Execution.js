@@ -8,7 +8,7 @@ var executionSchema = new Schema({
     afterImgUri: String,
     provider: String,
     testUrl: String,
-    result: Object
+    results: Object
 });
 
 module.exports = mongoose.model('Execution', executionSchema);
