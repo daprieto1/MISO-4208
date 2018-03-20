@@ -42,9 +42,12 @@ ExecutionService.execute = (test, providerName) => {
 }
 
 function executeCypressTest(test, newExecution) {
+    var targetFolder = `./public/results/${newExecution._id}`;
     return Utils.removeFile('./cypress/integration/testFile.js')
         .then(() => Utils.writeFile('./cypress/integration/testFile.js', test))
         .then(() => Utils.executeCommand(`./node_modules/cypress-cli/bin/cypress run --spec cypress/integration/testFile.js`))
+        .then(() => Utils.createFolder(targetFolder))
+        .then(() => Utils.copyFile('./results/my-test-output.xml', `${targetFolder}/output.xml`))
 }
 
 module.exports = ExecutionService;

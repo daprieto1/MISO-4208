@@ -3,6 +3,16 @@ var nrc = require('node-run-cmd');
 
 var UtilsService = {};
 
+UtilsService.copyFile = (source, target) => {
+    return new Promise((resolve, reject) => {
+        console.log(`UtilsService copyFile start: source = ${source}, target = ${target}`);
+        fs.copyFile(source, target, (err) => {
+            if (err) reject(err);
+            resolve();
+        });
+    });
+}
+
 UtilsService.removeFile = path => {
     return new Promise((resolve, reject) => {
         fs.unlink(path, (err) => {
@@ -15,6 +25,16 @@ UtilsService.removeFile = path => {
 UtilsService.cleanFolder = path => {
     return new Promise((resolve, reject) => {
         fs.rmdir(path, (err) => {
+            if (err) resolve(err);
+            resolve();
+        });
+    });
+}
+
+UtilsService.createFolder = path => {
+    return new Promise((resolve, reject) => {
+        console.log(`UtilsService createFolder start: path = ${path}`);
+        fs.mkdir(path, (err) => {
             if (err) resolve(err);
             resolve();
         });
