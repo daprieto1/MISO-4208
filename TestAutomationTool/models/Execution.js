@@ -8,7 +8,8 @@ var executionSchema = new Schema({
     describe: String,
     assertions: Number,
     provider: String,
-    testUrl: String,
+    time: String,
+    failures: String,
     results: Object
 });
 

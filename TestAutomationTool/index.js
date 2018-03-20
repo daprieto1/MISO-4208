@@ -12,6 +12,6 @@ var xml = `<?xml version="1.0" encoding="UTF-8"?>
     </testcase>
   </testsuite>
 </testsuites>`
-parseString(xml, function (err, result) {
-    console.dir(JSON.stringify(result));
+parseString(xml, function (err, resultdata) {
+    console.dir(resultdata.testsuites.testsuite[1].$.time);
 });

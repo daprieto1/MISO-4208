@@ -25,6 +25,7 @@
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/boostrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
     <script src="core.js"></script>
 
 </head>
@@ -63,9 +64,50 @@
                 </table>
             </uib-tab>
             <uib-tab index="1" heading="Create Test Suite">
-             
+
             </uib-tab>
-            <uib-tab index="2" heading="Historic">Long Labeled Justified content</uib-tab>
+            <uib-tab index="2" heading="Historic">
+                <table id="executions" class="table table-striped">
+                    <tbody ng-repeat="execution in executions">
+                        <tr>
+                            <td>
+                                <img src="images/{{execution.provider}}Logo.png" alt="" style="max-width: 48px;">
+                            </td>
+                            <td>
+                                <p>
+                                    <strong>{{execution.name}}</strong>
+                                </p>
+                                <p>{{execution.describe}}</p>
+                            </td>
+                            <td>
+                                <span class="label label-success" ng-if="execution.failures <= 0">
+                                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> success</span>
+                                <span class="label label-danger" ng-if="execution.failures > 0">
+                                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> fail</span>
+                            </td>
+                            <td>
+                                {{execution.timestamp}}
+                            </td>
+                            <td>
+                                <button class="btn btn-default">
+                                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download Test
+                                </button>
+
+                                <button class="btn btn-default" ng-click="selectExecution(execution)">
+                                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> More Stats
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-if="selectedExecution._id === execution._id">
+                            <td colspan="3">
+                                <canvas id="success-vs-failures-chart" width="400" height="400">
+
+                                </canvas>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
         </uib-tabset>
 
     </div>

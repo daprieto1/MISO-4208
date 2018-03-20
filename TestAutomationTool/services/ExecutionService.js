@@ -5,6 +5,21 @@ var ExecutionService = {};
 const CYPRESS_PROVIDER = 'cypress';
 const NIGTHWATCH_PROVIDER = 'nigthwatch';
 
+ExecutionService.getById = executionId => {
+    console.log(`ExecutionService getById start: executionId = ${executionId}`);
+    return Utils.readFile(`./public/results/${executionId}/output.xml`)
+        .then(xmlResult => Utils.xml2js(xmlResult))
+        .then(resultdata =>
+            new Promise((resolve, reject) => {
+                Execution.findById(executionId, (err, execution) => {
+                    if (err) reject(err);
+                    execution.results = resultdata
+                    resolve(execution);
+                });
+            })
+        )
+}
+
 ExecutionService.create = execution => {
     return new Promise((resolve, reject) => {
         execution.save((err, newExecution) => {
@@ -18,7 +33,7 @@ ExecutionService.update = execution => {
     return new Promise((resolve, reject) => {
         Execution.update({ _id: execution._id }, execution, (err, newExecution) => {
             if (err) reject(err);
-            resolve(newExecution)
+            resolve(execution)
         });
     });
 }
@@ -26,7 +41,6 @@ ExecutionService.update = execution => {
 ExecutionService.execute = (test, testSuite, providerName) => {
     return new Promise((resolve, reject) => {
         console.log(`ExecutionService execute start: providerName = ${providerName}`);
-        console.log(testSuite);
         var timestamp = (new Date()).getTime();
         var execution = new Execution({
             timestamp: timestamp,
@@ -50,8 +64,9 @@ ExecutionService.execute = (test, testSuite, providerName) => {
         }
 
         ExecutionService.create(execution)
-            .then(newExecution => executeFunction(test, newExecution))
-            .then(completeExecution => resolve(completeExecution))
+            .then(execution => executeFunction(test, execution))
+            .then(execution => ExecutionService.update(execution))
+            .then(execution => resolve(execution))
             .catch(err => reject(err));
     });
 }
@@ -66,7 +81,8 @@ function executeCypressTest(test, newExecution) {
         .then(() => Utils.readFile(`${targetFolder}/output.xml`))
         .then(xmlResult => Utils.xml2js(xmlResult))
         .then(resultdata => new Promise((resolve, reject) => {
-            newExecution.results = resultdata
+            newExecution.time = resultdata.testsuites.testsuite[1].$.time
+            newExecution.failures = resultdata.testsuites.testsuite[1].$.failures
             resolve(newExecution)
         }))
 }

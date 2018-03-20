@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var testSuiteSchema = new Schema({
     name: String,
-    description: String,
+    describe: String,
     provider: String,
     assertions: []
 });
