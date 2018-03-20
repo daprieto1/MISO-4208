@@ -23,13 +23,18 @@ ExecutionService.update = execution => {
     });
 }
 
-ExecutionService.execute = (test, testSuiteId, providerName) => {
+ExecutionService.execute = (test, testSuite, providerName) => {
     return new Promise((resolve, reject) => {
+        console.log(`ExecutionService execute start: providerName = ${providerName}`);
+        console.log(testSuite);
         var timestamp = (new Date()).getTime();
         var execution = new Execution({
             timestamp: timestamp,
             provider: providerName,
-            testSuiteId: testSuiteId
+            testSuiteId: testSuite._id,
+            name: testSuite.name,
+            describe: testSuite.describe,
+            assertions: testSuite.assertions.length
         });
 
         var executeFunction;
@@ -45,8 +50,8 @@ ExecutionService.execute = (test, testSuiteId, providerName) => {
         }
 
         ExecutionService.create(execution)
-            .then(newExecution => executeFunction(test, newExecution))            
-            .then(completeExecution => resolve(completeExecution))            
+            .then(newExecution => executeFunction(test, newExecution))
+            .then(completeExecution => resolve(completeExecution))
             .catch(err => reject(err));
     });
 }

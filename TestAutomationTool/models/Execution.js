@@ -4,8 +4,9 @@ var mongoose = require('mongoose'),
 var executionSchema = new Schema({
     timestamp: Number,
     testSuiteId: String,
-    beforeImgUri: String,
-    afterImgUri: String,
+    name: String,
+    describe: String,
+    assertions: Number,
     provider: String,
     testUrl: String,
     results: Object

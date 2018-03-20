@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 var testSuiteSchema = new Schema({
     name: String,
     description: String,
-    provider: String
+    provider: String,
+    assertions: []
 });
 
 module.exports = mongoose.model('TestSuite', testSuiteSchema);
