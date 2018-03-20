@@ -29,3 +29,10 @@ Feature: Create new habit
 		And I press "buttonSave"
 		And I touch the "Habit 2 with remember settings" text
 		Then I should see "8:00 AM"
+
+    Scenario: AS an user I WANT to create a new empty habit
+      Given I press "actionAdd"
+      #Enter habit name
+      When  I enter text "" into field with id "tvName"
+      And I press "buttonSave"
+      Then I should see "Name cannot be blank."
