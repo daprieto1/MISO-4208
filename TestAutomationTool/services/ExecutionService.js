@@ -14,12 +14,13 @@ ExecutionService.create = execution => {
     });
 }
 
-ExecutionService.execute = (test, providerName) => {
+ExecutionService.execute = (test, testSuiteId, providerName) => {
     return new Promise((resolve, reject) => {
         var timestamp = (new Date()).getTime();
         var execution = new Execution({
             timestamp: timestamp,
-            provider: providerName
+            provider: providerName,
+            testSuiteId: testSuiteId
         });
 
         var executeFunction;
@@ -48,6 +49,7 @@ function executeCypressTest(test, newExecution) {
         .then(() => Utils.executeCommand(`./node_modules/cypress-cli/bin/cypress run --spec cypress/integration/testFile.js`))
         .then(() => Utils.createFolder(targetFolder))
         .then(() => Utils.copyFile('./results/my-test-output.xml', `${targetFolder}/output.xml`))
+        .then(() => new Promise((resolve, reject) => { resolve(newExecution) }))
 }
 
 module.exports = ExecutionService;

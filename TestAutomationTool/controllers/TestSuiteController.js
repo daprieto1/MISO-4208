@@ -21,12 +21,15 @@ var routes = function (TestSuite) {
                 .catch(err => res.status(500).send(err));
         });
 
-    testSuiteRouter.route('/execute')
+    testSuiteRouter.route('/:id/execute/:providerName')
         .post((req, res) => {
-            TestSuiteService.getById('5aaf2b6db8db8e2e853a3a46')
-                .then(testSuite => AnalizerService.analyze(testSuite, 'cypress'))
+            var testSuiteId = req.params.id;
+            var providerName = req.params.providerName;
+            console.log(`TestSuitecontroller execute start: id = ${testSuiteId}, providerName = ${providerName}`);            
+            TestSuiteService.getById(testSuiteId)
+                .then(testSuite => AnalizerService.analyze(testSuite, providerName))
                 .then(provider => ParserService.parse(provider))
-                .then(test => ExecutionService.execute(test, 'cypress'))
+                .then(test => ExecutionService.execute(test, testSuiteId, providerName))
                 .then(execution => res.status(200).send(execution))
                 .catch(err => {
                     console.log(err);
