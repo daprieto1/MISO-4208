@@ -6,7 +6,7 @@
             "actions": [
                 {
                     "action": "goTo",
-                    "url": "http://andes.on.dolicloud.com/"
+                    "url": "http://miso4208.on.dolicloud.com/"
                 },
                 {
                     "action": "write",
@@ -34,7 +34,7 @@
             "actions": [
                 {
                     "action": "goTo",
-                    "url": "http://andes.on.dolicloud.com/"
+                    "url": "http://miso4208.on.dolicloud.com/"
                 },
                 {
                     "action": "write",

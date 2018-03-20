@@ -1,8 +1,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var executionSchema = new Schema({
-    insertionDate: Date,
+var executionSchema = new Schema({    
     timestamp: Number,
     beforeImgUri: String,
     afterImgUri: String,

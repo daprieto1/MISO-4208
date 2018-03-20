@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-var Utils = require('./Utils');
+var Utils = require('./services/UtilsService');
 var program = require('commander');
 var Command = require('./models/Command');
 var Parser = require('./parser/Parser');
