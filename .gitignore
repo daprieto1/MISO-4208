@@ -4,6 +4,7 @@ TestAutomationTool/public/bower_components
 TestAutomationTool/tests
 TestAutomationTool/results
 TestAutomationTool/public/images/**/*.png
+TestAutomationTool/public/results
 
 TestAutomationTool/cypress/videos
 TestAutomationTool/cypress/integration
