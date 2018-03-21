@@ -8,6 +8,8 @@ TestAutomationTool/public/results
 TestAutomationTool/cypress/videos
 TestAutomationTool/cypress/integration
 TestAutomationTool/cypress/screenshots
+TestAutomationTool/cucumber/node_modules
+TestAutomationTool/cucumber/features/test.feature
 UHabits/test_servers/*
 diagrams/TestAutomationTool.asta.lock
 

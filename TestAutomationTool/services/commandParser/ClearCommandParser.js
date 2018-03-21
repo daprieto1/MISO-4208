@@ -8,6 +8,10 @@ function ClearCommandParser(commandIn) {
     this.parseToNigthwatch = () => {
         return ``;
     };
+
+    this.parseToCucumber = () => {
+        return `Given I clean ${this.command.locator} locator`
+    }
 };
 
 module.exports = ClearCommandParser;

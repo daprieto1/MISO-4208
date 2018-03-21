@@ -1,6 +1,7 @@
 var CommandParserFactory = require('./CommandParserFactory');
 const CYPRESS_PROVIDER = 'cypress';
 const NIGTHWATCH_PROVIDER = 'nigthwatch';
+const CUCUMBER = 'cucumber'
 
 var ParserService = {};
 
@@ -14,6 +15,9 @@ ParserService.parse = (provider) => {
                 break;
             case NIGTHWATCH_PROVIDER:
                 test = getNigthwatchCode(provider)
+                break;
+            case CUCUMBER:
+                test = getCucumberCode(provider)
                 break;
             default:
                 reject(`The provider ${provider.providerName} is not supported`);
@@ -52,6 +56,18 @@ var getCypressCode = (provider) => {
     })`;
     return test;
 };
+
+var getCucumberCode = (provider) => {
+    var asserts = provider.assertions.map(assertion => {
+        var commandsParser = assertion.commands.map(command => CommandParserFactory.getParser(command));
+        var commands = commandsParser.map(commandParser => `\t\t${commandParser.parseToCucumber()}`).join('\n');
+        return `\tScenario: ${assertion.should}
+${commands}`;
+    }).join('\n');
+    var test = `Feature: ${provider.describe}
+${asserts}`;
+    return test;
+}
 
 module.exports = ParserService;
 

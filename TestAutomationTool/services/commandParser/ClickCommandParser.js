@@ -8,6 +8,10 @@ function ClickCommandParser(commandIn) {
     this.parseToNigthwatch = () => {
         return `.click('${this.command.locator}')`;
     };
+
+    this.parseToCucumber = () => {
+        return `Given I click on ${this.command.locator} locator`
+    }
 };
 
 module.exports = ClickCommandParser;
