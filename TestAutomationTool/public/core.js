@@ -18,12 +18,14 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             $http.get(`/api/execution/${execution._id}`)
                 .then(response => {
                     $scope.selectedExecution = parseExecution(response.data);
-                    var myDoughnutChart = new Chart('success-vs-failures-chart', {
+                    $scope.selectedExecution.failures = parseInt($scope.selectedExecution.failures)
+                    $scope.selectedExecution.successTests = $scope.selectedExecution.assertions - $scope.selectedExecution.failures
+                    new Chart('success-vs-failures-chart', {
                         type: 'doughnut',
                         data: {
                             labels: ["Success", "Fail"],
                             datasets: [{
-                                data: [10, 20],
+                                data: [$scope.selectedExecution.successTests, $scope.selectedExecution.failures],
                                 backgroundColor: [
                                     '#dff0d8',
                                     '#f2dede'

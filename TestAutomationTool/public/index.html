@@ -45,13 +45,15 @@
                     <tbody>
                         <tr ng-repeat="testSuite in testSuites">
                             <td>
-                                <img src="" alt="">
-                            </td>
-                            <td>
                                 <p>
                                     <strong>{{testSuite.name}}</strong>
                                 </p>
                                 <p>{{testSuite.describe}}</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" type="button">Assertions
+                                    <span class="badge">{{testSuite.assertions.length}}</span>
+                                </button>
                             </td>
                             <td>
                                 <span class="label label-success">{{testSuite.lastExecution.state}}</span>
@@ -103,6 +105,45 @@
                                 <canvas id="success-vs-failures-chart" width="400" height="400">
 
                                 </canvas>
+                            </td>
+                            <td colspan="2">
+                                <div class="jumbotron">
+                                    <h2>
+                                        <strong>Total Time:</strong>
+                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{selectedExecution.time}}</h2>
+
+                                    <button class="btn btn-primary" type="button">Assertions
+                                        <span class="badge">{{selectedExecution.assertions}}</span>
+                                    </button>
+
+                                    <button class="btn btn-success" type="button">Success
+                                        <span class="badge">{{selectedExecution.successTests}}</span>
+                                    </button>
+
+                                    <button class="btn btn-danger" type="button">Failures
+                                        <span class="badge">{{selectedExecution.failures}}</span>
+                                    </button>
+                                </div>
+                                <table class="table table-striped">
+                                    <tbody ng-repeat="testcase in selectedExecution.results.testsuites.testsuite[1].testcase">
+                                        <tr ng-class="testcase.failure ? 'danger' : 'success'">
+                                            <td>{{testcase.$.name}}</td>
+                                            <td>{{testcase.$.classname}}</td>
+                                            <td>
+                                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{testcase.$.time}}</td>
+                                            <td>
+                                                <button class="btn btn-default" ng-disabled="testcase.failure === undefined" ng-click="testcase.showFailure = true">
+                                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> See More
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="testcase.showFailure">
+                                            <td colspan="4">
+                                                <p>{{testcase.failure}}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
                     </tbody>
