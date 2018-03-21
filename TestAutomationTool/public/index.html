@@ -56,10 +56,15 @@
                                 </button>
                             </td>
                             <td>
-                                <span class="label label-success">{{testSuite.lastExecution.state}}</span>
+                                <select name="" id="" ng-model="testSuite.providerName">
+                                    <option value="cypress">cypress</option>
+                                    <option value="nightwatch">nightwatch</option>
+                                    <option value="cucumber">cucumber</option>
+                                </select>
                             </td>
                             <td>
-                                {{testSuite.lastExecution.date}}
+                                <button class="btn btn-warning" type="button" ng-click="execute(testSuite)">Execute                                    
+                                </button>
                             </td>
                         </tr>
                     </tbody>

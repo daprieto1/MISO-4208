@@ -1,5 +1,5 @@
 exports.config = {
-    
+
     //
     // ==================
     // Specify Test Files
@@ -72,7 +72,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: 'https://losestudiantes.co',
+    //baseUrl: 'https://losestudiantes.co',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -119,7 +119,15 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: http://webdriver.io/guide/testrunner/reporters.html
-    reporters: ['spec'],
+    reporters: ['dot','junit'],
+    reporterOptions: {
+        junit: {
+            outputDir: './',
+            outputFileFormat: function (opts) { // optional
+                return `results.xml`
+            }
+        }
+    },
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -138,7 +146,7 @@ exports.config = {
         timeout: 20000,     // <number> timeout for step definitions
         ignoreUndefinedDefinitions: false, // <boolean> Enable this config to treat undefined definitions as warnings.
     },
-    
+
     //
     // =====
     // Hooks

@@ -7,7 +7,7 @@ defineSupportCode(({ Given, When, Then }) => {
     });
 
     Given(/^I click on (.*) locator$/, locator => {
-        browser.element('.cajaLogIn').click();
+        browser.element(locator).click();
     });
 
     Given(/^I write (.*) text on the (.*) locator$/, (text, locator) => {
@@ -15,7 +15,7 @@ defineSupportCode(({ Given, When, Then }) => {
         element.keys(text);
     });
 
-    Given(/^I wait to see (.*) text on (.*) locator$/, (expectedText, loactor) => {
+    Given(/^I wait to see (.*) text on (.*) locator$/, (expectedText, locator) => {
         browser.waitForVisible(locator, 5000);
     });
 });

@@ -4,6 +4,7 @@ var Execution = require('./../models/Execution');
 var ExecutionService = {};
 const CYPRESS_PROVIDER = 'cypress';
 const NIGTHWATCH_PROVIDER = 'nigthwatch';
+const CUCUMBER = 'cucumber';
 
 ExecutionService.getById = executionId => {
     console.log(`ExecutionService getById start: executionId = ${executionId}`);
@@ -59,6 +60,9 @@ ExecutionService.execute = (test, testSuite, providerName) => {
             case NIGTHWATCH_PROVIDER:
                 executeFunction = executeNigthwatchTest;
                 break;
+            case CUCUMBER:
+                executeFunction = executeCucumberTest;
+                break;
             default:
                 reject(`The provider ${providerName} is not supported`);
         }
@@ -83,6 +87,22 @@ function executeCypressTest(test, newExecution) {
         .then(resultdata => new Promise((resolve, reject) => {
             newExecution.time = resultdata.testsuites.testsuite[1].$.time
             newExecution.failures = resultdata.testsuites.testsuite[1].$.failures
+            resolve(newExecution)
+        }))
+}
+
+function executeCucumberTest(test, newExecution) {
+    var targetFolder = `./public/results/${newExecution._id}`;
+    return Utils.removeFile('./cucumber/features/test.feature')
+        .then(() => Utils.writeFile('./cucumber/features/test.feature', test))
+        .then(() => Utils.executeCommand(`cd cucumber && npm test`))
+        .then(() => Utils.createFolder(targetFolder))
+        .then(() => Utils.copyFile('./cucumber/results.xml', `${targetFolder}/output.xml`))
+        .then(() => Utils.readFile(`${targetFolder}/output.xml`))
+        .then(xmlResult => Utils.xml2js(xmlResult))
+        .then(resultdata => new Promise((resolve, reject) => {
+            newExecution.time = resultdata.testsuites.testsuite[0].$.time
+            newExecution.failures = resultdata.testsuites.testsuite[0].$.failures
             resolve(newExecution)
         }))
 }

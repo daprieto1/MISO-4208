@@ -36,6 +36,10 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 }, err => console.log(err));
         }
 
+        $scope.execute = testSuite => {
+            $http.post(`/api/testsuite/${testSuite._id}/execute/${testSuite.providerName}`);
+        }
+
         function parseExecution(execution) {
             execution.failures = parseInt(execution.failures);
             execution.timestamp = (new Date(execution.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
