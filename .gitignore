@@ -9,4 +9,5 @@ TestAutomationTool/cypress/videos
 TestAutomationTool/cypress/integration
 TestAutomationTool/cypress/screenshots
 UHabits/test_servers/*
+diagrams/TestAutomationTool.asta.lock
 
