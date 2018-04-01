@@ -1,8 +1,42 @@
 // public/core.js
 angular.module('automationTestingTool', ['ui.bootstrap'])
     .controller('mainController', function ($scope, $http) {
-        $scope.androidRandomTest = {};
-        
+        $scope.androidRandomTest = {
+            seed: {
+                command: '-s'
+            },
+            throttle: {
+                command: '--throttle'
+            },
+            pcttouch: {
+                command: '-pct-touch'
+            },
+            pctmotion: {
+                command: '--pct-motion'
+            },
+            pcttrackball: {
+                command: '--pct-trackball'
+            },
+            pctnav: {
+                command: '--pct-nav'
+            },
+            pctmajornav: {
+                command: '--pct-majornav'
+            },
+            pctsyskeys: {
+                command: '--pct-syskeys'
+            },
+            pctappswitch: {
+                command: '--pct-appswitch'
+            },
+            pctanyevent: {
+                command: '--pct-anyevent'
+            },
+            allowedpackagename: {
+                command: '-p'
+            }
+        };
+
         $http.get('/api/testsuite')
             .then(response => {
                 $scope.testSuites = response.data;
@@ -40,6 +74,18 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
 
         $scope.execute = testSuite => {
             $http.post(`/api/testsuite/${testSuite._id}/execute/${testSuite.providerName}`);
+        }
+
+        $scope.generateRandomTestingCommand = () => {       
+            var command = 'adb shell monkey'
+            for (var key in $scope.androidRandomTest) {
+                var element = $scope.androidRandomTest[key]
+                if(element.visible){
+                    command += ` ${element.command} ${element.value}`
+                }
+            }
+            $scope.command = command
+            console.log(command)
         }
 
         function parseExecution(execution) {
