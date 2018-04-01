@@ -6,6 +6,7 @@ function ValidateTextCommandParser(commandIn) {
     };
 
     this.parseToNigthwatch = () => {
+        console.log(this.command.expectedText);
         return `.assert.containsText('${this.command.locator}', '${this.command.expectedText}')`;
     };
 

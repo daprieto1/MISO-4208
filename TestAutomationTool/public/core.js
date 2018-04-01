@@ -1,6 +1,8 @@
 // public/core.js
 angular.module('automationTestingTool', ['ui.bootstrap'])
     .controller('mainController', function ($scope, $http) {
+        $scope.androidRandomTest = {};
+        
         $http.get('/api/testsuite')
             .then(response => {
                 $scope.testSuites = response.data;
