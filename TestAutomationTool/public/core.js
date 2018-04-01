@@ -84,6 +84,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                     command += ` ${element.command} ${element.value}`
                 }
             }
+            command += ` ${$scope.androidRandomTest.eventcount.value}`
             $scope.command = command
             console.log(command)
         }
