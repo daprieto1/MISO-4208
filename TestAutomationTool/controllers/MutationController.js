@@ -11,9 +11,7 @@ var routes = function (Execution) {
                 if (err) res.send(err)
                 res.json(executions);
             });
-        });
-
-        .post((req, res) => {
+        }).post((req, res) => {
             console.log("test paula")
                 // .then(testSuite => res.status(200).send(testSuite))
                 // .catch(err => res.status(500).send(err));
