@@ -12,9 +12,12 @@ var routes = function (Execution) {
                 res.json(executions);
             });
         }).post((req, res) => {
-            console.log("test paula")
-                // .then(testSuite => res.status(200).send(testSuite))
-                // .catch(err => res.status(500).send(err));
+            var repositorio = req.body.repository;
+            var version = req.body.versionPrueba;
+            console.log("test paula");
+            console.log(repositorio);    
+            console.log(version);
+            res.status(200).send('OK');
         });
     // executionRouter.route('/:id')
     //     .get((req, res) => {
