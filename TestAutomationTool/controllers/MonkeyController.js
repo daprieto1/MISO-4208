@@ -6,8 +6,9 @@ var routes = function () {
 
     mokeyRouter.route('/')
         .post((req, res) => {
-            monkeyCommand = req.monkeyCommand;
+            monkeyCommand = req.body.monkeyCommand;
             console.log(monkeyCommand);
+            res.status(200).send('OK');
         });
 
     return mokeyRouter;

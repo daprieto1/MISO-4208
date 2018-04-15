@@ -39,11 +39,11 @@ app.use(function (req, res, next) {
 
 var testSuiteRouter = require('./controllers/TestSuiteController')(TestSuite);
 var executionRouter = require('./controllers/ExecutionController')(Execution);
-var monkeyRouter = require('./controllers/MonkeyController');
+var monkeyRouter = require('./controllers/MonkeyController')();
 
 app.use('/api/testsuite', testSuiteRouter);
 app.use('/api/execution', executionRouter);
-app.use('/api/monkye', monkeyRouter);
+app.use('/api/monkey', monkeyRouter);
 
 app.get('*', function (req, res) {
     res.sendfile('./piublic/index.html');
