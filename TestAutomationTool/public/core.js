@@ -76,17 +76,22 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             $http.post(`/api/testsuite/${testSuite._id}/execute/${testSuite.providerName}`);
         }
 
+
         $scope.generateRandomTestingCommand = () => {       
             var command = 'adb shell monkey'
             for (var key in $scope.androidRandomTest) {
-                var element = $scope.androidRandomTest[key]
+                var element = $scope.androidRandomTest[key];
                 if(element.visible){
-                    command += ` ${element.command} ${element.value}`
+                    command += ` ${element.command} ${element.value}`;
                 }
             }
-            command += ` ${$scope.androidRandomTest.eventcount.value}`
-            $scope.command = command
-            console.log(command)
+            command += ` ${$scope.androidRandomTest.eventcount.value}`;
+            $scope.command = command;
+            console.log(command);
+            var comando = {};
+            comando.monkeyCommand = command;
+            console.log(comando);
+            $http.post('/api/monkey/', comando);
         }
 
         function parseExecution(execution) {
