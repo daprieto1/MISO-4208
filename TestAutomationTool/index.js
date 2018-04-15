@@ -4,6 +4,7 @@ var program = require('commander');
 var Command = require('./models/Command');
 var Parser = require('./parser/Parser');
 var Analyzer = require('./analyzer/Analizer');
+var Emulator = require('./android/Emulator');
 
 program
     .version('0.1.0');
@@ -49,6 +50,14 @@ program.command('execute')
             .then(test => Utils.writeFile(locationPath, test))
             .then(() => Utils.executeCommand(`cypress run --spec ${fileName}`))
             .catch(err => console.log(err));
+    });
+
+    program.command('run_emulator')
+    .description('Run the android emulator')
+    .action(function () {
+        console.log('Start run android emulator');
+        Emulator.Iniciar()
+      
     });
 
 program.parse(process.argv);
