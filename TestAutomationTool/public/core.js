@@ -37,6 +37,12 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             }
         };
 
+        $scope.mutation={
+          js:{
+            repository:''
+          }
+        }
+
         $http.get('/api/testsuite')
             .then(response => {
                 $scope.testSuites = response.data;
@@ -76,7 +82,14 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             $http.post(`/api/testsuite/${testSuite._id}/execute/${testSuite.providerName}`);
         }
 
-        $scope.generateRandomTestingCommand = () => {       
+        $scope.executeMutationTestingJS = () =>{
+          console.log("mutation testing "+$scope.mutation.js.repository);
+          var data = {};
+          data.repository = $scope.mutation.js.repository;
+          $http.post('/api/mutation', data);
+        }
+
+        $scope.generateRandomTestingCommand = () => {
             var command = 'adb shell monkey'
             for (var key in $scope.androidRandomTest) {
                 var element = $scope.androidRandomTest[key]

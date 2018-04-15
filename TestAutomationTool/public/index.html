@@ -383,6 +383,26 @@
                     <button ng-click="generateRandomTestingCommand()">Generate</button>
                 </form>
             </uib-tab>
+            <uib-tab index="3" heading="Mutation testing">
+                <table id="mutationtesting" class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>
+                              <label for="repoJSPath" class="col-sm-2 control-label">
+                                  JS Mutaion
+                              </label>
+                              <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="repoJSPath" name="repoPath"  placeholder="ingrese la URL del repositorio" ng-model="mutation.js.repository" required>
+                              </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-warning" type="button" ng-click="executeMutationTestingJS()">Execute
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
         </uib-tabset>
 
     </div>
