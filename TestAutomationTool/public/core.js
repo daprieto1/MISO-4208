@@ -39,7 +39,17 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
 
         $scope.mutation={
           js:{
-            repository:''
+            repository:'',
+            conditionalsBoundary:'',
+            deletion:'',
+            increments:'',
+            invertNegatives:'',
+            math:'',
+            negateConditionals:'',
+            removeConditionals:'',
+            returnValues:'',
+            switchCases:'',
+            concurrency:1
           }
         }
 
@@ -84,8 +94,19 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
 
         $scope.executeMutationTestingJS = () =>{
           console.log("mutation testing "+$scope.mutation.js.repository);
-          var data = {};          
+          var data = {};
           data.repository = $scope.mutation.js.repository;
+          data.conditionalsBoundary = $scope.mutation.js.conditionalsBoundary;
+          data.deletion = $scope.mutation.js.deletion;
+          data.increments = $scope.mutation.js.increments;
+          data.invertNegatives = $scope.mutation.js.invertNegatives;
+          data.math = $scope.mutation.js.math;
+          data.negateConditionals = $scope.mutation.js.negateConditionals;
+          data.removeConditionals = $scope.mutation.js.removeConditionals;
+          data.returnValues = $scope.mutation.js.returnValues;
+          data.switchCases = $scope.mutation.js.switchCases;
+          data.concurrency = $scope.mutation.js.concurrency;
+
           $http.post('/api/mutation/', data);
         }
 

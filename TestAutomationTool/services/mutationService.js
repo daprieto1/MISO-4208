@@ -1,8 +1,9 @@
 var MutationService = {};
 var Utils = require('./UtilsService')
 var folderRepository = 'folderRepositories/'
-MutationService.ExecuteMutode = repositoryPath => {
+MutationService.ExecuteMutode = mutationData => {
     return new Promise((resolve, reject) => {
+        var repositoryPath = mutationData.repository;
         var lastSlash = repositoryPath.lastIndexOf("/");
         var folder = repositoryPath.substring(lastSlash+1);
         var point = folder.lastIndexOf(".");

@@ -13,9 +13,8 @@ var routes = function (Execution) {
             });
         })
         .post((req, res) => {
-            var repository = req.body.repository;
-            console.log('execution post');
-            MutationService.ExecuteMutode(repository)
+            var mutationData = req.body;
+            MutationService.ExecuteMutode(mutationData)
             .then(() => res.status(200).send('ok'))
             .catch(err => {
                 console.log(err);
