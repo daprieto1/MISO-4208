@@ -1,6 +1,6 @@
 var MutationService = {};
 var Utils = require('./UtilsService')
-var folderRepository = 'folderRepository/'
+var folderRepository = 'folderRepositories/'
 MutationService.ExecuteMutode = repositoryPath => {
     return new Promise((resolve, reject) => {
         var lastSlash = repositoryPath.lastIndexOf("/");
@@ -19,20 +19,12 @@ MutationService.ExecuteMutode = repositoryPath => {
           'npm install', //install dependecies
           'mutode -c 1'//run mutode
         ];
-        var options = { cwd: gitFolder};
+        var callback = function(data){
+          console.log(data);
+        }
+        var options = { cwd: './'+gitFolder, shell:true, onData:callback};
         Utils.executeCommand('git clone '+repositoryPath + ' '+gitFolder)
         .then(()=>Utils.executeCommandsWithOptions(commands, options));
-
-        // Utils.executeCommand('cd '+gitFolder +'');
-
-        //.then(() => Utils.executeCommand('cd '+folderRepository))
-        //cd '+folderRepository+' &&
-        // .then(() => new Promise((resolve, reject) => {
-        //     resolve()
-        // }))
-        // .then(() => Utils.executeCommand('cd '+folder))
-        // .then(() => Utils.executeCommand('npm i'))
-        // .then(() => Utils.executeCommand('mutode -c 1'))
     });
 }
 
