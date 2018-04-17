@@ -70,6 +70,17 @@ UtilsService.writeFile = (path, content) => {
     });
 };
 
+UtilsService.validateCreateFolder = (path) => {
+  return new Promise((resolve, reject) => {
+      fs.exists(path, (exists) => {
+          if (!exists){
+            UtilsService.createFolder(path);
+            resolve();
+        }
+      });
+  });
+};
+
 UtilsService.executeCommand = command => {
     return new Promise((resolve, reject) => {
         console.log(`UtilsService executeCommand start: command = ${command}`);
@@ -84,4 +95,19 @@ UtilsService.executeCommand = command => {
     });
 };
 
+UtilsService.executeCommandsWithOptions = (commands,options) => {
+    return new Promise((resolve, reject) => {
+        commands.forEach(function(command){
+          console.log(`UtilsService executeCommand start: command = ${command}`);
+        })
+        nrc.run(commands,options)
+            .then(function (exitCodes) {
+                console.log(`UtilsService executeCommand ends: exitCodes = ${exitCodes}`);
+                resolve();
+            }, function (err) {
+                console.log(`UtilsService executeCommand ends: error = ${err}`);
+                reject(err);
+            });
+    });
+};
 module.exports = UtilsService;

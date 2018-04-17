@@ -1,6 +1,6 @@
 var express = require('express');
 
-var ExecutionService = require('./../services/mutationService');
+var MutationService = require('./../services/mutationService');
 
 var routes = function (Execution) {
     var mutationRouter = express.Router();
@@ -11,22 +11,18 @@ var routes = function (Execution) {
                 if (err) res.send(err)
                 res.json(executions);
             });
-        }).post((req, res) => {
-            var repositorio = req.body.repository;
-            var version = req.body.versionPrueba;
-            console.log("test paula");
-            console.log(repositorio);    
-            console.log(version);
-            res.status(200).send('OK');
+        })
+        .post((req, res) => {
+            var repository = req.body.repository;
+            console.log('execution post');
+            MutationService.ExecuteMutode(repository)
+            .then(() => res.status(200).send('ok'))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err);
+            });
+
         });
-    // executionRouter.route('/:id')
-    //     .get((req, res) => {
-    //         var id = req.params.id;
-    //         console.log(`ExecutionController getById start: id = ${id}`);
-    //         ExecutionService.getById(id)
-    //             .then(execution => res.send(execution))
-    //             .catch(err => res.status(500).send(err));
-    //     });
 
     return mutationRouter;
 };

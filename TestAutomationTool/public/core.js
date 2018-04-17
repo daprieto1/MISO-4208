@@ -84,8 +84,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
 
         $scope.executeMutationTestingJS = () =>{
           console.log("mutation testing "+$scope.mutation.js.repository);
-          var data = {};
-          data.versionPrueba = "version 2.0";
+          var data = {};          
           data.repository = $scope.mutation.js.repository;
           $http.post('/api/mutation/', data);
         }
