@@ -1,4 +1,5 @@
 var express = require('express');
+var MonkeyService = require('./../services/MonkeyService');
 
 
 var routes = function () {
@@ -8,6 +9,7 @@ var routes = function () {
         .post((req, res) => {
             monkeyCommand = req.body.monkeyCommand;
             console.log(monkeyCommand);
+            MonkeyService.execute(monkeyCommand);
             res.status(200).send('OK');
         });
 
