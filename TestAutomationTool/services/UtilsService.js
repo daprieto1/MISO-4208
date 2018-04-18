@@ -99,7 +99,7 @@ UtilsService.executeCommandsWithOptions = (commands,options) => {
     return new Promise((resolve, reject) => {
         commands.forEach(function(command){
           console.log(`UtilsService executeCommand start: command = ${command}`);
-        })
+        });
         nrc.run(commands,options)
             .then(function (exitCodes) {
                 console.log(`UtilsService executeCommand ends: exitCodes = ${exitCodes}`);
