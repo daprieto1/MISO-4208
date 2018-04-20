@@ -70,6 +70,14 @@ UtilsService.writeFile = (path, content) => {
     });
 };
 
+UtilsService.appendFile = (path, content) => {
+    try {
+        fs.appendFileSync(path, content);
+    } catch (err) {
+        console.log('Error escribiendo en archivo:' + path);
+    }
+};
+
 UtilsService.executeCommand = command => {
     return new Promise((resolve, reject) => {
         console.log(`UtilsService executeCommand start: command = ${command}`);
