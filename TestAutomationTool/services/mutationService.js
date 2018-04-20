@@ -1,5 +1,8 @@
+var Mutode = require('./../models/Mutode');
+var Utils = require('./UtilsService');
+
 var MutationService = {};
-var Utils = require('./UtilsService')
+
 var folderRepository = 'folderRepositoriesSamples/'
 MutationService.ExecuteMutode = mutationData => {
     return new Promise((resolve, reject) => {
@@ -30,7 +33,7 @@ MutationService.ExecuteMutode = mutationData => {
         var validateResponseMutode = function(data){
           console.log(data);
           if(data.includes('Out of ')){
-              var execution  =MutationService.GenerateReport(data);
+              var execution  =MutationService.generateReport(data);
               resultExecution.wereDiscarded =execution.wereDiscarded;
               resultExecution.totalMutants = execution.totalMutants;
               resultExecution.survived=execution.survived;
@@ -45,11 +48,30 @@ MutationService.ExecuteMutode = mutationData => {
         var options = { cwd: './'+gitFolder, shell:true, onData:validateResponseMutode};
         Utils.executeCommand('git clone '+repositoryPath + ' '+gitFolder)
         .then(()=>Utils.executeCommandsWithOptions(commands, options))
-        .then(()=>console.log(resultExecution));
+        .then(()=>MutationService.saveReport(resultExecution));
     });
 }
 
-MutationService.GenerateReport = dataToSave =>{
+
+MutationService.saveReport = report =>{
+  return new Promise((resolve, reject) => {
+    var mutodeReport = new Mutode({
+      wereDiscarded: report.wereDiscarded,
+      survived: report.survived,
+      killed: report.killed,
+      totalMutants: report.totalMutants,
+      coverage: report.coverage,
+      project: report.project
+    });
+
+    mutodeReport.save((err, newMutodeReport) => {
+        if (err) reject(err);
+        resolve(newMutodeReport);
+    });  
+  });
+}
+
+MutationService.generateReport = dataToSave =>{
       var words = dataToSave.split(' ');
       var resultNumbers = [];
       words.forEach(function(word){
