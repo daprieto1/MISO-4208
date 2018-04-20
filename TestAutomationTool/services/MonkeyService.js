@@ -13,7 +13,6 @@ MonkeyService.execute = (dato) => {
         nrc.run(emulator);    
         // Se esperan 30 segundos para asegurar el que el emulador este arriba.
         
-        //nrc.run('ls', { onData: dataCallback });
         Utils.createFolder(targetFolder).then(() =>{
           console.log(comando);
           setTimeout(function(){

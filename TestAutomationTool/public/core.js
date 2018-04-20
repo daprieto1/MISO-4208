@@ -37,6 +37,22 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             }
         };
 
+        $scope.mutation={
+          js:{
+            repository:'',
+            conditionalsBoundary:'',
+            deletion:'',
+            increments:'',
+            invertNegatives:'',
+            math:'',
+            negateConditionals:'',
+            removeConditionals:'',
+            returnValues:'',
+            switchCases:'',
+            concurrency:1
+          }
+        }
+
         $http.get('/api/testsuite')
             .then(response => {
                 $scope.testSuites = response.data;
@@ -76,8 +92,25 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             $http.post(`/api/testsuite/${testSuite._id}/execute/${testSuite.providerName}`);
         }
 
+        $scope.executeMutationTestingJS = () =>{
+          console.log("mutation testing "+$scope.mutation.js.repository);
+          var data = {};
+          data.repository = $scope.mutation.js.repository;
+          data.conditionalsBoundary = $scope.mutation.js.conditionalsBoundary;
+          data.deletion = $scope.mutation.js.deletion;
+          data.increments = $scope.mutation.js.increments;
+          data.invertNegatives = $scope.mutation.js.invertNegatives;
+          data.math = $scope.mutation.js.math;
+          data.negateConditionals = $scope.mutation.js.negateConditionals;
+          data.removeConditionals = $scope.mutation.js.removeConditionals;
+          data.returnValues = $scope.mutation.js.returnValues;
+          data.switchCases = $scope.mutation.js.switchCases;
+          data.concurrency = $scope.mutation.js.concurrency;
 
-        $scope.generateRandomTestingCommand = () => {       
+          $http.post('/api/mutation/', data);
+        }
+
+        $scope.generateRandomTestingCommand = () => {
             var command = 'adb shell monkey'
             for (var key in $scope.androidRandomTest) {
                 var element = $scope.androidRandomTest[key];
