@@ -57,7 +57,7 @@
     <div class="form-group" ng-class="androidRandomTestForm.seed.$valid ? 'has-success' : 'has-error' ">
         <div class="col-sm-1">
             <button ng-click="androidRandomTest.seed.visible = !androidRandomTest.seed.visible">
-                <span class="glyphicon glyphicon-{{androidRandomTest.seed.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+                <span class="glyphicon glyphglyphicon glyphicon-{{androidRandomTest.seed.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
             </button>
         </div>
         <label for="seed" class="col-sm-2 control-label">
@@ -226,5 +226,5 @@
         </div>
     </div>
 
-    <button ng-click="generateRandomTestingCommand()">Generate</button>
+    <button class="btn btn-primary" ng-click="generateRandomTestingCommand()">Generate</button>
 </form>
