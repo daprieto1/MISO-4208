@@ -40,6 +40,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
         $scope.mutation={
           js:{
             repository:'',
+            index:'',
             conditionalsBoundary:'',
             deletion:'',
             increments:'',
@@ -62,6 +63,10 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             .then(response => {
                 $scope.executions = response.data.map(execution => parseExecution(execution));
             }, err => console.log(err));
+
+        $http.get('/api/mutation/').then(data =>{
+          console.log(data);
+        });
 
         $scope.selectedExecution = undefined;
 
@@ -96,6 +101,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
           console.log("mutation testing "+$scope.mutation.js.repository);
           var data = {};
           data.repository = $scope.mutation.js.repository;
+          data.index = $scope.mutation.js.index;
           data.conditionalsBoundary = $scope.mutation.js.conditionalsBoundary;
           data.deletion = $scope.mutation.js.deletion;
           data.increments = $scope.mutation.js.increments;
