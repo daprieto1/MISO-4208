@@ -64,9 +64,13 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 $scope.executions = response.data.map(execution => parseExecution(execution));
             }, err => console.log(err));
 
-        $http.get('/api/mutation/').then(data =>{
-          console.log(data);
-        });
+        $http.get('/api/mutation/').then(response =>{
+            $scope.mutodeResults = response.data.map(result => parseMutodeResults(result)).reverse(function(r1, r2){
+              return r1.timestamp -r2.timestamp;
+            });
+
+            console.log($scope.mutodeResults);
+        }, err => console.log(err));
 
         $scope.selectedExecution = undefined;
 
@@ -133,6 +137,11 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             execution.failures = parseInt(execution.failures);
             execution.timestamp = (new Date(execution.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
             return execution;
+        }
+
+        function parseMutodeResults(result){
+          result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+          return result;
         }
 
     });
