@@ -9,8 +9,12 @@ var routes = function () {
         .post((req, res) => {
             monkeyCommand = req.body.monkeyCommand;
             console.log(monkeyCommand);
-            MonkeyService.execute(monkeyCommand);
-            res.status(200).send('OK');
+            MonkeyService.execute(monkeyCommand)
+            .then(() => res.status(200).send('OK'))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err);
+            });
         });
 
     return mokeyRouter;
