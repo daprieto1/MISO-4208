@@ -1,6 +1,7 @@
 // public/core.js
 angular.module('automationTestingTool', ['ui.bootstrap'])
     .controller('mainController', function ($scope, $http) {
+        $scope.conta =[0, 0, 0, 0, 0, 0, 0, 0]
         $scope.androidRandomTest = {
             seed: {
                 command: '-s'
@@ -9,7 +10,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 command: '--throttle'
             },
             pcttouch: {
-                command: '-pct-touch'
+                command: '--pct-touch'
             },
             pctmotion: {
                 command: '--pct-motion'
@@ -34,7 +35,11 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             },
             allowedpackagename: {
                 command: '-p'
+            },
+            verbosity:{
+                command: '-v'
             }
+
         };
 
         $scope.mutation={
@@ -115,7 +120,10 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             for (var key in $scope.androidRandomTest) {
                 var element = $scope.androidRandomTest[key];
                 if(element.visible){
-                    command += ` ${element.command} ${element.value}`;
+                    if(key != 'verbosity')
+                        command += ` ${element.command} ${element.value}`;
+                    else if( element.value)
+                        command += ` ${element.command}`
                 }
             }
             command += ` ${$scope.androidRandomTest.eventcount.value}`;
@@ -126,7 +134,9 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             console.log(comando);
             $http.post('/api/monkey/', comando);
         }
-
+        $scope.printValue = (posicion, valor) => {
+            $scope.conta[posicion] = valor;
+        }
         function parseExecution(execution) {
             execution.failures = parseInt(execution.failures);
             execution.timestamp = (new Date(execution.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })

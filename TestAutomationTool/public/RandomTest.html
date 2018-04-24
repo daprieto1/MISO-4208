@@ -28,8 +28,8 @@
             verbosity
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.verbosity.visible">
-            <input type="number" class="form-control" id="verbosity" name="verbosity" aria-describedby="help-verbosity" placeholder="75"
-                ng-model="androidRandomTest.verbosity.value" min="0" required>
+            <input type="checkbox" class="form-check-input" id="verbosity" name="verbosity" aria-describedby="help-verbosity" placeholder="75"
+                ng-model="androidRandomTest.verbosity.value" value="1">
         </div>
     </div>
 
@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <div class="form-group" ng-class="androidRandomTestForm.pcttouch.$valid ? 'has-success' : 'has-error' ">
+    <div class="form-group form-row" ng-class="androidRandomTestForm.pcttouch.$valid ? 'has-success' : 'has-error' ">
         <div class="col-sm-1">
             <button ng-click="androidRandomTest.pcttouch.visible = !androidRandomTest.pcttouch.visible">
                 <span class="glyphicon glyphicon-{{androidRandomTest.pcttouch.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
@@ -98,12 +98,26 @@
             percentage touch
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pcttouch.visible">
-            <input type="number" class="form-control" id="pcttouch" name="pcttouch" aria-describedby="help-pcttouch" placeholder="75"
-                ng-model="androidRandomTest.pcttouch.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pcttouch" ng-model="androidRandomTest.pcttouch.value"
+                aria-describedby="help-pcttouch"list="tickmarks" style="width: 50%" ng-change="printValue(0, androidRandomTest.pcttouch.value)" required>
+            <div>{{ conta[0] }}</div>
             <span id="help-pcttouch" class="help-block">Adjust percentage of touch events. (Touch events are a down-up event in a single place on the
                 screen.)
-            </span>
+            </span>  
         </div>
+        <datalist id="tickmarks">
+            <option value="0" label="0%">
+            <option value="10">
+            <option value="20">
+            <option value="30">
+            <option value="40">
+            <option value="50" label="50%">
+            <option value="60">
+            <option value="70">
+            <option value="80">
+            <option value="90">
+            <option value="100" label="100%">
+          </datalist>
     </div>
 
     <div class="form-group" ng-class="androidRandomTestForm.pctmotion.$valid ? 'has-success' : 'has-error' ">
@@ -116,8 +130,9 @@
             percentage motion
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pctmotion.visible">
-            <input type="number" class="form-control" id="pctmotion" name="pctmotion" aria-describedby="help-pctmotion" placeholder="75"
-                ng-model="androidRandomTest.pctmotion.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pctmotion" ng-model="androidRandomTest.pctmotion.value"
+                aria-describedby="help-pctmotion"list="tickmarks" style="width: 50%" ng-change="printValue(1, androidRandomTest.pctmotion.value)" required>
+            <div>{{ conta[1] }}</div>
             <span id="help-pctmotion" class="help-block">Adjust percentage of motion events. (Motion events consist of a down event somewhere on the screen,
                 a series of pseudo-random movements, and an up event.)</span>
         </div>
@@ -133,8 +148,9 @@
             percentage trackball
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pcttrackball.visible">
-            <input type="number" class="form-control" id="pcttrackball" name="pcttrackball" aria-describedby="help-pcttrackball" placeholder="75"
-                ng-model="androidRandomTest.pcttrackball.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pcttrackball" ng-model="androidRandomTest.pcttrackball.value"
+                aria-describedby="help-pcttrackball"list="tickmarks" style="width: 50%" ng-change="printValue(2, androidRandomTest.pcttrackball.value)" required>
+            <div>{{ conta[2] }}</div>
             <span id="help-pcttrackball" class="help-block">Adjust percentage of trackball events. (Trackball events consist of one or more random movements,
                 sometimes followed by a click.)</span>
         </div>
@@ -150,11 +166,12 @@
             percentage nav
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pctnav.visible">
-            <input type="number" class="form-control" id="pctnav" name="pctnav" aria-describedby="help-pctnav" placeholder="75" ng-model="androidRandomTest.pctnav.value"
-                min="0" max="100" required>
+            <input type="range" class="custom-range" id="pctnav" ng-model="androidRandomTest.pctnav.value"
+                aria-describedby="help-pctnav"list="tickmarks" style="width: 50%" ng-change="printValue(3, androidRandomTest.pctnav.value)" required>
+            <div>{{ conta[3] }}</div>
             <span id="help-pctnav" class="help-block">Adjust percentage of "basic" navigation events. (Navigation events consist of up/down/left/right,
                 as input from a directional input device.)</span>
-        </div>
+        </div>  
     </div>
 
     <div class="form-group" ng-class="androidRandomTestForm.pctmajornav.$valid ? 'has-success' : 'has-error' ">
@@ -167,8 +184,9 @@
             percentage majornav
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pctmajornav.visible">
-            <input type="number" class="form-control" id="pctmajornav" name="pctmajornav" aria-describedby="help-pctmajornav" placeholder="75"
-                ng-model="androidRandomTest.pctmajornav.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pctmajornav" ng-model="androidRandomTest.pctmajornav.value"
+                aria-describedby="help-pctmajornav"list="tickmarks" style="width: 50%" ng-change="printValue(4, androidRandomTest.pctmajornav.value)" required>
+            <div>{{ conta[4] }}</div>
             <span id="help-pctmajornav" class="help-block">Adjust percentage of "major" navigation events. (These are navigation events that will typically
                 cause actions within your UI, such as the center button in a 5-way pad, the back key, or
                 the menu key.)</span>
@@ -185,8 +203,9 @@
             percentage syskeys
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pctsyskeys.visible">
-            <input type="number" class="form-control" id="pctsyskeys" name="pctsyskeys" aria-describedby="help-pctsyskeys" placeholder="75"
-                ng-model="androidRandomTest.pctsyskeys.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pctsyskeys" ng-model="androidRandomTest.pctsyskeys.value"
+                aria-describedby="help-pctsyskeys"list="tickmarks" style="width: 50%" ng-change="printValue(5, androidRandomTest.pctsyskeys.value)" required>
+            <div>{{ conta[5] }}</div>
             <span id="help-pctsyskeys" class="help-block">Adjust percentage of "system" key events. (These are keys that are generally reserved for use
                 by the system, such as Home, Back, Start Call, End Call, or Volume controls.)</span>
         </div>
@@ -202,8 +221,9 @@
             percentage appswitch
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pctappswitch.visible">
-            <input type="number" class="form-control" id="pctappswitch" name="pctappswitch" aria-describedby="help-pctappswitch" placeholder="75"
-                ng-model="androidRandomTest.pctappswitch.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pctappswitch" ng-model="androidRandomTest.pctappswitch.value"
+                aria-describedby="help-pctappswitch"list="tickmarks" style="width: 50%" ng-change="printValue(6, androidRandomTest.pctappswitch.value)" required>
+            <div>{{ conta[6] }}</div>
             <span id="help-pctappswitch" class="help-block">Adjust percentage of activity launches. At random intervals, the Monkey will issue a startActivity()
                 call, as a way of maximizing coverage of all activities within your package.</span>
         </div>
@@ -219,8 +239,9 @@
             percentage anyevent
         </label>
         <div class="col-sm-9" ng-if="androidRandomTest.pctanyevent.visible">
-            <input type="number" class="form-control" id="pctanyevent" name="pctanyevent" aria-describedby="help-pctanyevent" placeholder="75"
-                ng-model="androidRandomTest.pctanyevent.value" min="0" max="100" required>
+            <input type="range" class="custom-range" id="pctanyevent" ng-model="androidRandomTest.pctanyevent.value"
+                aria-describedby="help-pctanyevent"list="tickmarks" style="width: 50%" ng-change="printValue(7, androidRandomTest.pctanyevent.value)" required>
+            <div>{{ conta[7] }}</div>
             <span id="help-pctanyevent" class="help-block">Adjust percentage of other types of events. This is a catch-all for all other types of events
                 such as keypresses, other less-used buttons on the device, and so forth.</span>
         </div>
