@@ -77,6 +77,14 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             console.log($scope.mutodeResults);
         }, err => console.log(err));
 
+        $http.get('/api/monkey/').then(response =>{
+            $scope.monkeyResults = response.data.map(result => parseMonkeyResults(result)).reverse(function(r1, r2){
+              return r1.timestamp -r2.timestamp;
+            });
+
+            console.log($scope.monkeyResults);
+        }, err => console.log(err));
+
         $scope.selectedExecution = undefined;
 
         $scope.selectExecution = (execution) => {
@@ -157,5 +165,10 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
           result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
           return result;
         }
-
+        
+        function parseMonkeyResults(result){
+            result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+            result.error = parseInt(result.error);
+            return result;
+          }
     });

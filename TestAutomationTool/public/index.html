@@ -154,7 +154,10 @@
             <uib-tab index="2" heading="Create Random Test">
                 <div ng-include="'RandomTest.html'"></div>
             </uib-tab>
-            <uib-tab index="3" heading="Mutation testing">
+            <uib-tab index="3" heading="Historic Random Test">
+                <div ng-include="'HistoricRandomTest.html'"></div>
+            </uib-tab>
+            <uib-tab index="4" heading="Mutation testing">
                 <table id="mutationtesting" class="table table-striped">
                     <tbody>
                         <tr>
@@ -208,7 +211,7 @@
                     </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="4" heading="Historic Mutation Testing">
+            <uib-tab index="5" heading="Historic Mutation Testing">
                 <table id="mutodeResults" class="table table-striped">
                     <tbody ng-repeat="mutodeResult in mutodeResults">
                       <tr>

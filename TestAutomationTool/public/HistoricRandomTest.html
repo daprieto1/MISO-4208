@@ -1,0 +1,20 @@
+<table id="monkeyResults" class="table table-striped">
+    <tbody ng-repeat="monkeyResult in monkeyResults">
+        <tr>
+            <td>
+                <p>
+                    <strong>{{monkeyResult.command}}</strong>
+                </p>
+                <p>Execution time: {{monkeyResult.timestamp}}</p>
+            </td>
+            <td>
+                <p>
+                    Error: <strong> {{monkeyResult.error}}</strong>
+                </p>
+            </td>
+            <td>
+                <a href="/api/monkey/{{monkeyResult.file}}" rel="noopener noreferrer" TARGET="_blank">Log de Ejecución</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

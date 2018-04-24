@@ -64,5 +64,11 @@ MonkeyService.saveReport = report =>{
   });
 }
 
+MonkeyService.pathFile = (fileName) => {
+  var path = require("path");
+  var targetFolder = path.join('.','public','results','Monkey');
+  return(path.join(targetFolder, fileName));
+};
+
 module.exports = MonkeyService;
 
