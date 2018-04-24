@@ -3,7 +3,7 @@ var Utils = require('./UtilsService');
 
 var MutationService = {};
 
-var folderRepository = 'folderRepositoriesSamples/'
+var folderRepository = 'folderRepositories/'
 MutationService.ExecuteMutode = mutationData => {
     return new Promise((resolve, reject) => {
         var repositoryPath = mutationData.repository;
@@ -18,10 +18,14 @@ MutationService.ExecuteMutode = mutationData => {
 
         Utils.validateCreateFolder(folderRepository);
         var mutodeCommand = 'mutode --mutators ';
+        var mutants ="";
         mutationData.mutators.forEach(function(mutator){
-          mutodeCommand += mutator + ' ';
+          mutants += mutator + ' ';
         });
+        mutants = mutants.substring(0, mutants.length-1);
+        mutodeCommand += mutants + ' ';
         mutodeCommand += '-c '+mutationData.concurrency;
+        mutodeCommand += ' '+(mutationData.index!= undefined? mutationData.index:'');
 
         console.log(mutodeCommand);
 
@@ -29,7 +33,7 @@ MutationService.ExecuteMutode = mutationData => {
                         mutodeCommand//run mutode
                       ];
 
-        var resultExecution = {"project":folder};
+        var resultExecution = {"project":folder, "mutants":mutants};
         var validateResponseMutode = function(data){
           console.log(data);
           if(data.includes('Out of ')){
@@ -56,18 +60,20 @@ MutationService.ExecuteMutode = mutationData => {
 MutationService.saveReport = report =>{
   return new Promise((resolve, reject) => {
     var mutodeReport = new Mutode({
+      timestamp: (new Date()).getTime(),
       wereDiscarded: report.wereDiscarded,
       survived: report.survived,
       killed: report.killed,
       totalMutants: report.totalMutants,
       coverage: report.coverage,
-      project: report.project
+      project: report.project,
+      mutants:report.mutants
     });
 
     mutodeReport.save((err, newMutodeReport) => {
         if (err) reject(err);
         resolve(newMutodeReport);
-    });  
+    });
   });
 }
 

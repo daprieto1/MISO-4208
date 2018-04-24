@@ -11,7 +11,7 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 // models
 var TestSuite = require('./models/TestSuite');
 var Execution = require('./models/Execution');
-
+var Mutode = require('./models/Mutode')
 // configuration =================
 var mongoUri = process.env.MONGODB_URI || "mongodb://heroku_d30n00bf:r2i994t3j68i9i2sj8vfitj20@ds023468.mlab.com:23468/heroku_d30n00bf";
 mongoose.connect(mongoUri, function (err, res) {
@@ -39,8 +39,10 @@ app.use(function (req, res, next) {
 
 var testSuiteRouter = require('./controllers/TestSuiteController')(TestSuite);
 var executionRouter = require('./controllers/ExecutionController')(Execution);
-var mutationRouter = require('./controllers/MutationController')();
+
+var mutationRouter = require('./controllers/MutationController')(Mutode);
 var monkeyRouter = require('./controllers/MonkeyController')();
+
 
 app.use('/api/testsuite', testSuiteRouter);
 app.use('/api/execution', executionRouter);
@@ -56,4 +58,4 @@ app.get('*', function (req, res) {
 // listen (start app with node server.js) ======================================
 var port = process.env.PORT || 8080;
 app.listen(port);
-console.log("App listening on port 8080");
+console.log("App listening on port "+port);

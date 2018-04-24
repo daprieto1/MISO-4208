@@ -165,6 +165,13 @@
                               <div class="col-sm-9">
                                   <input type="text" class="form-control" id="repoJSPath" name="repoPath"  placeholder="repository URL" ng-model="mutation.js.repository" required>
                               </div>
+                              </br></br>
+                              <label for="repoJSPath" class="col-sm-2 control-label">
+                                  Path index.js file
+                              </label>
+                              <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="indexPath" name="indexPath"  placeholder="index.js path" ng-model="mutation.js.index" required>
+                              </div>
                               </br></br></br>
                               <label for ="mutatorsTable" class="col-sm-2 control-label">Mutators</label>
                                 <table id="mutatorsTable">
@@ -198,6 +205,58 @@
                                 </button>
                             </td>
                         </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+            <uib-tab index="4" heading="Historic Mutation Testing">
+                <table id="mutodeResults" class="table table-striped">
+                    <tbody ng-repeat="mutodeResult in mutodeResults">
+                      <tr>
+                        <td>
+                            <p>
+                                <strong>{{mutodeResult.project}}</strong>
+                            </p>
+                            <p>Execution time: {{mutodeResult.timestamp}}</p>
+                        </td>
+                        <td>
+                          <p>
+                              Total Mutants: <strong> {{mutodeResult.totalMutants}}</strong>
+                          </p>
+                          Coverage:
+                          <span class="label label-success" ng-if="mutodeResult.coverage == 100">
+                              <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.coverage}}%</span>
+                          <span class="label label-danger" ng-if="mutodeResult.coverage < 100">
+                              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.coverage}}%</span>
+
+                          </br>
+                          Killed:
+                          <span class="label label-success" ng-if="mutodeResult.killed == mutodeResult.totalMutants">
+                              <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.kiled}}</span>
+                          <span class="label label-danger" ng-if="mutodeResult.killed < mutodeResult.totalMutants">
+                              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.killed}}</span>
+
+                          </br>
+                            Survived:
+                            <span class="label label-success" ng-if="mutodeResult.survived == 0">
+                                <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.survived}}</span>
+                            <span class="label label-danger" ng-if="mutodeResult.survived > 0">
+                                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.survived}}</span>
+
+                            </br>
+                            Discarded:
+                            <span class="label label-success" ng-if="mutodeResult.wereDiscarded == 0">
+                                <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.wereDiscarded}}</span>
+                            <span class="label label-danger" ng-if="mutodeResult.wereDiscarded > 0">
+                                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.wereDiscarded}}</span>
+
+                        </td>
+                        <td>
+                          <div ng-repeat="mutant in mutodeResult.mutants.split(' ')">
+                            <strong>{{mutant}}</strong>
+                          </div>
+                        </td>
+
+                    </tr>
                     </tbody>
                 </table>
             </uib-tab>
