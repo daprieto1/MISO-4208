@@ -11,9 +11,10 @@
         <tr>
             <td>
                 <p>
-                    <strong>{{monkeyResult.command}}</strong>
+                    <strong>{{ monkeyResult.command }}</strong>
                 </p>
-                <p>Execution time: {{monkeyResult.timestamp}}</p>
+                <p>Execution time: {{ monkeyResult.timestamp }}</p>
+                <button class="btn btn-warning" type="button" ng-click="executeMonkeyAgain(monkeyResult.command)">Execute again</button>
             </td>
             <td>
                 <span class="label label-success" ng-if="monkeyResult.error == 0">

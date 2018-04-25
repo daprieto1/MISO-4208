@@ -87,14 +87,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             console.log($scope.mutodeResults);
         }, err => console.log(err));
         
-        loadInfoHistoricMonkey()
-        /*$http.get('/api/monkey/').then(response =>{
-            $scope.monkeyResults = response.data.map(result => parseMonkeyResults(result)).reverse(function(r1, r2){
-              return r1.timestamp -r2.timestamp;
-            });
-
-            console.log($scope.monkeyResults);
-        }, err => console.log(err));*/
+        loadInfoHistoricMonkey();
 
         $scope.selectedExecution = undefined;
 
@@ -185,6 +178,13 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             var comando = {};
             comando.monkeyCommand = $scope.command;
             console.log(comando);
+            $http.post('/api/monkey/', comando);
+        }
+        $scope.executeMonkeyAgain = (commandSend) => {
+            
+            var comando = {};
+            comando.monkeyCommand = commandSend;
+            console.log(commandSend);
             $http.post('/api/monkey/', comando);
         }
         $scope.printValue = (posicion, valor) => {
