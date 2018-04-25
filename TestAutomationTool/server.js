@@ -11,6 +11,7 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 // models
 var TestSuite = require('./models/TestSuite');
 var Execution = require('./models/Execution');
+var MdroidExecution = require('./models/MdroidExecution');
 
 // configuration =================
 var mongoUri = process.env.MONGODB_URI || "mongodb://heroku_d30n00bf:r2i994t3j68i9i2sj8vfitj20@ds023468.mlab.com:23468/heroku_d30n00bf";
@@ -40,10 +41,12 @@ app.use(function (req, res, next) {
 var testSuiteRouter = require('./controllers/TestSuiteController')(TestSuite);
 var executionRouter = require('./controllers/ExecutionController')(Execution);
 var mutationRouter = require('./controllers/MutationController')();
+var mdroidRouter = require('./controllers/MdroidController')(MdroidExecution);
 
 app.use('/api/testsuite', testSuiteRouter);
 app.use('/api/execution', executionRouter);
 app.use('/api/mutation', mutationRouter);
+app.use('/api/mdroid', mdroidRouter);
 
 app.get('*', function (req, res) {
     res.sendfile('./piublic/index.html');
