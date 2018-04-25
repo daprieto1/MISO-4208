@@ -2,6 +2,8 @@
 angular.module('automationTestingTool', ['ui.bootstrap'])
     .controller('mainController', function ($scope, $http) {
         $scope.conta =[0, 0, 0, 0, 0, 0, 0, 0]
+        $scope.command = "";
+        $scope.ErrorCommand = "";
         $scope.androidRandomTest = {
             seed: {
                 command: '-s'
@@ -10,28 +12,36 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 command: '--throttle'
             },
             pcttouch: {
-                command: '--pct-touch'
+                command: '--pct-touch',
+                value: 0
             },
             pctmotion: {
-                command: '--pct-motion'
+                command: '--pct-motion',
+                value: 0
             },
             pcttrackball: {
-                command: '--pct-trackball'
+                command: '--pct-trackball',
+                value: 0
             },
             pctnav: {
-                command: '--pct-nav'
+                command: '--pct-nav',
+                value: 0
             },
             pctmajornav: {
-                command: '--pct-majornav'
+                command: '--pct-majornav',
+                value: 0
             },
             pctsyskeys: {
-                command: '--pct-syskeys'
+                command: '--pct-syskeys',
+                value: 0
             },
             pctappswitch: {
-                command: '--pct-appswitch'
+                command: '--pct-appswitch',
+                value: 0
             },
             pctanyevent: {
-                command: '--pct-anyevent'
+                command: '--pct-anyevent',
+                value: 0
             },
             allowedpackagename: {
                 command: '-p'
@@ -144,11 +154,35 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                         command += ` ${element.command}`
                 }
             }
+            
+            if($scope.androidRandomTest.eventcount == undefined){
+                $scope.ErrorCommand = "Enter the event count!";
+                return;
+            }
+
             command += ` ${$scope.androidRandomTest.eventcount.value}`;
+            
+            var porcentaje = 0;
+            $scope.conta.forEach(element => {
+                porcentaje += element;
+            });
+            if(porcentaje > 100){
+                $scope.ErrorCommand = "The sum of the percentages should be <= 100%!";
+                return;
+            }
+
+            $scope.ErrorCommand = "";
             $scope.command = command;
-            console.log(command);
-            var comando = {};
             comando.monkeyCommand = command;
+        }
+        $scope.executeRandomTestingCommand = () => {
+            
+            if ($scope.command == ""){
+                $scope.ErrorCommand = "First generates the command!";
+                return;
+            }
+            var comando = {};
+            comando.monkeyCommand = $scope.command;
             console.log(comando);
             $http.post('/api/monkey/', comando);
         }
