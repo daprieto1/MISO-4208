@@ -2,6 +2,9 @@
     <div class="col-sm-1">
         <button class="btn btn-primary" ng-click="refreshHistoricMonkey()">Refresh</button>
     </div>
+    <div class="col-sm-4 col-sm-offset-7">
+        <label>Report Date: {{ monkeyReportDate }}</label>   
+    </div>
 </div>
 <table id="monkeyResults" class="table table-striped">
     <tbody ng-repeat="monkeyResult in monkeyResults">

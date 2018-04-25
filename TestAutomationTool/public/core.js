@@ -215,7 +215,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 $scope.monkeyResults = response.data.map(result => parseMonkeyResults(result)).reverse(function(r1, r2){
                   return r1.timestamp -r2.timestamp;
                 });
-    
+                $scope.monkeyReportDate =  (new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }));
                 console.log($scope.monkeyResults);
             }, err => console.log(err));
         }
