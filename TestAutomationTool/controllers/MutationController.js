@@ -2,20 +2,21 @@ var express = require('express');
 
 var MutationService = require('./../services/mutationService');
 
-var routes = function (Execution) {
+var routes = function (Mutode) {
     var mutationRouter = express.Router();
 
     mutationRouter.route('/')
         .get((req, res) => {
-            Execution.find(function (err, executions) {
+            Mutode.find(function (err, mutodes) {
                 if (err) res.send(err)
-                res.json(executions);
+                res.json(mutodes);
             });
         })
         .post((req, res) => {
             var mutationData = req.body;
             var mutode = {};
             mutode.repository = mutationData.repository;
+            mutode.index = mutationData.index;
             mutode.mutators = [];
             if(mutationData.conditionalsBoundary.length>0) mutode.mutators.push(mutationData.conditionalsBoundary);
             if(mutationData.deletion.length>0) mutode.mutators.push(mutationData.deletion);

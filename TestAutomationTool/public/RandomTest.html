@@ -1,0 +1,251 @@
+<form name="androidRandomTestForm" class="form-horizontal" novalidate>
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="">General</a>
+        </li>
+    </ol>
+
+    <div class="form-group" ng-class="androidRandomTestForm.eventcount.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+        </div>
+        <label for="eventcount" class="col-sm-2 control-label">
+            event count
+        </label>
+        <div class="col-sm-9">
+            <input type="number" class="form-control" id="eventcount" name="eventcount" aria-describedby="help-eventcount" placeholder="75"
+                ng-model="androidRandomTest.eventcount.value" min="0" required>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.verbosity.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.verbosity.visible = !androidRandomTest.verbosity.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.verbosity.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="verbosity" class="col-sm-2 control-label">
+            verbosity
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.verbosity.visible">
+            <input type="checkbox" class="form-check-input" id="verbosity" name="verbosity" aria-describedby="help-verbosity" placeholder="75"
+                ng-model="androidRandomTest.verbosity.value" value="1">
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.allowedpackagename.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.allowedpackagename.visible = !androidRandomTest.allowedpackagename.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.allowedpackagename.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="allowedpackagename" class="col-sm-2 control-label">
+            allowed package name
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.allowedpackagename.visible">
+            <input type="text" class="form-control" id="allowedpackagename" name="allowedpackagename" aria-describedby="help-allowedpackagename"
+                placeholder="your.package.name" ng-model="androidRandomTest.allowedpackagename.value" required>
+        </div>
+    </div>
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="">Events</a>
+        </li>
+    </ol>
+
+    <div class="form-group" ng-class="androidRandomTestForm.seed.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.seed.visible = !androidRandomTest.seed.visible">
+                <span class="glyphicon glyphglyphicon glyphicon-{{androidRandomTest.seed.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="seed" class="col-sm-2 control-label">
+            Seed
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.seed.visible">
+            <input type="number" class="form-control" id="seed" name="seed" aria-describedby="help-seed" placeholder="75" ng-model="androidRandomTest.seed.value"
+                min="0" required>
+            <span id="help-seed" class="help-block">Seed value for pseudo-random number generator. If you re-run the Monkey with the same seed value,
+                it will generate the same sequence of events.</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.throttle.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.throttle.visible = !androidRandomTest.throttle.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.throttle.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="throttle" class="col-sm-2 control-label">
+            throttle
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.throttle.visible">
+            <input type="number" class="form-control" id="throttle" name="throttle" aria-describedby="help-throttle" placeholder="75"
+                ng-model="androidRandomTest.throttle.value" min="0" required>
+            <span id="help-throttle" class="help-block">Inserts a fixed delay between events. You can use this option to slow down the Monkey. If not
+                specified, there is no delay and the events are generated as rapidly as possible.</span>
+        </div>
+    </div>
+
+    <div class="form-group form-row" ng-class="androidRandomTestForm.pcttouch.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pcttouch.visible = !androidRandomTest.pcttouch.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pcttouch.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pcttouch" class="col-sm-2 control-label">
+            percentage touch
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pcttouch.visible">
+            <input type="range" class="custom-range" id="pcttouch" ng-model="androidRandomTest.pcttouch.value"
+                aria-describedby="help-pcttouch"list="tickmarks" style="width: 50%" ng-change="printValue(0, androidRandomTest.pcttouch.value)" required>
+            <div>{{ conta[0] }}</div>
+            <span id="help-pcttouch" class="help-block">Adjust percentage of touch events. (Touch events are a down-up event in a single place on the
+                screen.)
+            </span>  
+        </div>
+        <datalist id="tickmarks">
+            <option value="0" label="0%">
+            <option value="10">
+            <option value="20">
+            <option value="30">
+            <option value="40">
+            <option value="50" label="50%">
+            <option value="60">
+            <option value="70">
+            <option value="80">
+            <option value="90">
+            <option value="100" label="100%">
+          </datalist>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pctmotion.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pctmotion.visible = !androidRandomTest.pctmotion.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pctmotion.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pctmotion" class="col-sm-2 control-label">
+            percentage motion
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pctmotion.visible">
+            <input type="range" class="custom-range" id="pctmotion" ng-model="androidRandomTest.pctmotion.value"
+                aria-describedby="help-pctmotion"list="tickmarks" style="width: 50%" ng-change="printValue(1, androidRandomTest.pctmotion.value)" required>
+            <div>{{ conta[1] }}</div>
+            <span id="help-pctmotion" class="help-block">Adjust percentage of motion events. (Motion events consist of a down event somewhere on the screen,
+                a series of pseudo-random movements, and an up event.)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pcttrackball.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pcttrackball.visible = !androidRandomTest.pcttrackball.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pcttrackball.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pcttrackball" class="col-sm-2 control-label">
+            percentage trackball
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pcttrackball.visible">
+            <input type="range" class="custom-range" id="pcttrackball" ng-model="androidRandomTest.pcttrackball.value"
+                aria-describedby="help-pcttrackball"list="tickmarks" style="width: 50%" ng-change="printValue(2, androidRandomTest.pcttrackball.value)" required>
+            <div>{{ conta[2] }}</div>
+            <span id="help-pcttrackball" class="help-block">Adjust percentage of trackball events. (Trackball events consist of one or more random movements,
+                sometimes followed by a click.)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pctnav.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pctnav.visible = !androidRandomTest.pctnav.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pctnav.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pctnav" class="col-sm-2 control-label">
+            percentage nav
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pctnav.visible">
+            <input type="range" class="custom-range" id="pctnav" ng-model="androidRandomTest.pctnav.value"
+                aria-describedby="help-pctnav"list="tickmarks" style="width: 50%" ng-change="printValue(3, androidRandomTest.pctnav.value)" required>
+            <div>{{ conta[3] }}</div>
+            <span id="help-pctnav" class="help-block">Adjust percentage of "basic" navigation events. (Navigation events consist of up/down/left/right,
+                as input from a directional input device.)</span>
+        </div>  
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pctmajornav.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pctmajornav.visible = !androidRandomTest.pctmajornav.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pctmajornav.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pctmajornav" class="col-sm-2 control-label">
+            percentage majornav
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pctmajornav.visible">
+            <input type="range" class="custom-range" id="pctmajornav" ng-model="androidRandomTest.pctmajornav.value"
+                aria-describedby="help-pctmajornav"list="tickmarks" style="width: 50%" ng-change="printValue(4, androidRandomTest.pctmajornav.value)" required>
+            <div>{{ conta[4] }}</div>
+            <span id="help-pctmajornav" class="help-block">Adjust percentage of "major" navigation events. (These are navigation events that will typically
+                cause actions within your UI, such as the center button in a 5-way pad, the back key, or
+                the menu key.)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pctsyskeys.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pctsyskeys.visible = !androidRandomTest.pctsyskeys.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pctsyskeys.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pctsyskeys" class="col-sm-2 control-label">
+            percentage syskeys
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pctsyskeys.visible">
+            <input type="range" class="custom-range" id="pctsyskeys" ng-model="androidRandomTest.pctsyskeys.value"
+                aria-describedby="help-pctsyskeys"list="tickmarks" style="width: 50%" ng-change="printValue(5, androidRandomTest.pctsyskeys.value)" required>
+            <div>{{ conta[5] }}</div>
+            <span id="help-pctsyskeys" class="help-block">Adjust percentage of "system" key events. (These are keys that are generally reserved for use
+                by the system, such as Home, Back, Start Call, End Call, or Volume controls.)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pctappswitch.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pctappswitch.visible = !androidRandomTest.pctappswitch.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pctappswitch.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pctappswitch" class="col-sm-2 control-label">
+            percentage appswitch
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pctappswitch.visible">
+            <input type="range" class="custom-range" id="pctappswitch" ng-model="androidRandomTest.pctappswitch.value"
+                aria-describedby="help-pctappswitch"list="tickmarks" style="width: 50%" ng-change="printValue(6, androidRandomTest.pctappswitch.value)" required>
+            <div>{{ conta[6] }}</div>
+            <span id="help-pctappswitch" class="help-block">Adjust percentage of activity launches. At random intervals, the Monkey will issue a startActivity()
+                call, as a way of maximizing coverage of all activities within your package.</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="androidRandomTestForm.pctanyevent.$valid ? 'has-success' : 'has-error' ">
+        <div class="col-sm-1">
+            <button ng-click="androidRandomTest.pctanyevent.visible = !androidRandomTest.pctanyevent.visible">
+                <span class="glyphicon glyphicon-{{androidRandomTest.pctanyevent.visible ? 'minus' : 'plus' }}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <label for="pctanyevent" class="col-sm-2 control-label">
+            percentage anyevent
+        </label>
+        <div class="col-sm-9" ng-if="androidRandomTest.pctanyevent.visible">
+            <input type="range" class="custom-range" id="pctanyevent" ng-model="androidRandomTest.pctanyevent.value"
+                aria-describedby="help-pctanyevent"list="tickmarks" style="width: 50%" ng-change="printValue(7, androidRandomTest.pctanyevent.value)" required>
+            <div>{{ conta[7] }}</div>
+            <span id="help-pctanyevent" class="help-block">Adjust percentage of other types of events. This is a catch-all for all other types of events
+                such as keypresses, other less-used buttons on the device, and so forth.</span>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" ng-click="generateRandomTestingCommand()">Generate</button>
+</form>

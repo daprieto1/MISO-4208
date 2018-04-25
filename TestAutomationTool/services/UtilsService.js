@@ -70,16 +70,24 @@ UtilsService.writeFile = (path, content) => {
     });
 };
 
-UtilsService.validateCreateFolder = (path) => {
-  return new Promise((resolve, reject) => {
-      fs.exists(path, (exists) => {
-          if (!exists){
-            UtilsService.createFolder(path);
-            resolve();
-        }
-      });
-  });
+UtilsService.appendFile = (path, content) => {
+    try {
+        fs.appendFileSync(path, content);
+    } catch (err) {
+        console.log('Error escribiendo en archivo:' + path);
+    }
 };
+
+UtilsService.validateCreateFolder = (path) => {
+    return new Promise((resolve, reject) => {
+        fs.exists(path, (exists) => {
+            if (!exists){
+              UtilsService.createFolder(path);
+              resolve();
+          }
+        });
+    });
+}
 
 UtilsService.executeCommand = command => {
     return new Promise((resolve, reject) => {

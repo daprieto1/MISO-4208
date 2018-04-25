@@ -1,6 +1,9 @@
+var Mutode = require('./../models/Mutode');
+var Utils = require('./UtilsService');
+
 var MutationService = {};
-var Utils = require('./UtilsService')
-var folderRepository = 'folderRepositoriesSamples/'
+
+var folderRepository = 'folderRepositories/'
 MutationService.ExecuteMutode = mutationData => {
     return new Promise((resolve, reject) => {
         var repositoryPath = mutationData.repository;
@@ -15,10 +18,14 @@ MutationService.ExecuteMutode = mutationData => {
 
         Utils.validateCreateFolder(folderRepository);
         var mutodeCommand = 'mutode --mutators ';
+        var mutants ="";
         mutationData.mutators.forEach(function(mutator){
-          mutodeCommand += mutator + ' ';
+          mutants += mutator + ' ';
         });
+        mutants = mutants.substring(0, mutants.length-1);
+        mutodeCommand += mutants + ' ';
         mutodeCommand += '-c '+mutationData.concurrency;
+        mutodeCommand += ' '+(mutationData.index!= undefined? mutationData.index:'');
 
         console.log(mutodeCommand);
 
@@ -26,11 +33,11 @@ MutationService.ExecuteMutode = mutationData => {
                         mutodeCommand//run mutode
                       ];
 
-        var resultExecution = {"project":folder};
+        var resultExecution = {"project":folder, "mutants":mutants};
         var validateResponseMutode = function(data){
           console.log(data);
           if(data.includes('Out of ')){
-              var execution  =MutationService.GenerateReport(data);
+              var execution  =MutationService.generateReport(data);
               resultExecution.wereDiscarded =execution.wereDiscarded;
               resultExecution.totalMutants = execution.totalMutants;
               resultExecution.survived=execution.survived;
@@ -45,11 +52,32 @@ MutationService.ExecuteMutode = mutationData => {
         var options = { cwd: './'+gitFolder, shell:true, onData:validateResponseMutode};
         Utils.executeCommand('git clone '+repositoryPath + ' '+gitFolder)
         .then(()=>Utils.executeCommandsWithOptions(commands, options))
-        .then(()=>console.log(resultExecution));
+        .then(()=>MutationService.saveReport(resultExecution));
     });
 }
 
-MutationService.GenerateReport = dataToSave =>{
+
+MutationService.saveReport = report =>{
+  return new Promise((resolve, reject) => {
+    var mutodeReport = new Mutode({
+      timestamp: (new Date()).getTime(),
+      wereDiscarded: report.wereDiscarded,
+      survived: report.survived,
+      killed: report.killed,
+      totalMutants: report.totalMutants,
+      coverage: report.coverage,
+      project: report.project,
+      mutants:report.mutants
+    });
+
+    mutodeReport.save((err, newMutodeReport) => {
+        if (err) reject(err);
+        resolve(newMutodeReport);
+    });
+  });
+}
+
+MutationService.generateReport = dataToSave =>{
       var words = dataToSave.split(' ');
       var resultNumbers = [];
       words.forEach(function(word){
