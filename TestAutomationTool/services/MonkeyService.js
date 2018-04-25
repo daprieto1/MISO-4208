@@ -26,7 +26,7 @@ MonkeyService.execute = (dato) => {
               Utils.appendFile(pathFile, data);
             };
           var errorCallback = function(data) {
-              Utils.appendFile(pathFile, "Error: " + data);
+              Utils.appendFile(pathFile, "Error__: " + data);
             };
           var doneCallback = function(data) {
             console.log("codigo de salida: " + data);

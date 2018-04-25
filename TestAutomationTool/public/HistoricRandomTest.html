@@ -8,9 +8,14 @@
                 <p>Execution time: {{monkeyResult.timestamp}}</p>
             </td>
             <td>
-                <p>
-                    Error: <strong> {{monkeyResult.error}}</strong>
-                </p>
+                <span class="label label-success" ng-if="monkeyResult.error == 0">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                    success
+                </span>
+                <span class="label label-danger" ng-if="monkeyResult.error != 0">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                    fails
+                </span>
             </td>
             <td>
                 <a href="/api/monkey/{{monkeyResult.file}}" rel="noopener noreferrer" TARGET="_blank">Log de Ejecución</a>
