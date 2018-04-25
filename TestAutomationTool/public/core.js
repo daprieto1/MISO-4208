@@ -86,14 +86,15 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
 
             console.log($scope.mutodeResults);
         }, err => console.log(err));
-
-        $http.get('/api/monkey/').then(response =>{
+        
+        loadInfoHistoricMonkey()
+        /*$http.get('/api/monkey/').then(response =>{
             $scope.monkeyResults = response.data.map(result => parseMonkeyResults(result)).reverse(function(r1, r2){
               return r1.timestamp -r2.timestamp;
             });
 
             console.log($scope.monkeyResults);
-        }, err => console.log(err));
+        }, err => console.log(err));*/
 
         $scope.selectedExecution = undefined;
 
@@ -189,6 +190,9 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
         $scope.printValue = (posicion, valor) => {
             $scope.conta[posicion] = valor;
         }
+        $scope.refreshHistoricMonkey = () => {
+            loadInfoHistoricMonkey()
+        }
         function parseExecution(execution) {
             execution.failures = parseInt(execution.failures);
             execution.timestamp = (new Date(execution.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
@@ -204,5 +208,16 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
             result.error = parseInt(result.error);
             return result;
-          }
+        }
+
+        function loadInfoHistoricMonkey(){
+            $http.get('/api/monkey/').then(response =>{
+                $scope.monkeyResults = response.data.map(result => parseMonkeyResults(result)).reverse(function(r1, r2){
+                  return r1.timestamp -r2.timestamp;
+                });
+    
+                console.log($scope.monkeyResults);
+            }, err => console.log(err));
+        }
+        
     });
