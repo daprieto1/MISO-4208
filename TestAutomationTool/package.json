@@ -13,6 +13,7 @@
     "url": "https://github.com/daprieto1/MISO-4208.git"
   },
   "dependencies": {
+    "aws-sdk": "^2.240.1",
     "body-parser": "~1.5.2",
     "commander": "^2.14.1",
     "cypress": "^2.0.2",
@@ -22,6 +23,7 @@
     "method-override": "~2.1.2",
     "mongoose": "^5.0.9",
     "morgan": "~1.2.2",
+    "node-cron": "^1.2.1",
     "node-run-cmd": "^1.0.1",
     "xml2js": "^0.4.19"
   }
