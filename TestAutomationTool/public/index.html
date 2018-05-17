@@ -159,79 +159,12 @@
                 <div ng-include="'HistoricRandomTest.html'"></div>
             </uib-tab>
             <uib-tab index="4" heading="Mutation testing">
-                <table id="mutationtesting" class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label for="repoJSPath" class="col-sm-2 control-label">
-                                    JS Mutation
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="repoJSPath" name="repoPath" placeholder="repository URL" ng-model="mutation.js.repository"
-                                        required>
-                                </div>
-                                </br>
-                                </br>
-                                </br>
-                                <label for="mutatorsTable" class="col-sm-2 control-label">Mutators</label>
-
-                                <table id="mutatorsTable">
-                                    <tr>
-                                        <td style="border-top-width: 0px !important;">
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.conditionalsBoundary" ng-true-value="'conditionalsBoundary'" ng-false-value="''"
-                                                /> ConditionalsBoundary</label>
-                                            <br/>
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.deletion" ng-true-value="'deletion'" ng-false-value="''" /> Deletion </label>
-                                            <br/>
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.increments" ng-true-value="'increments'" ng-false-value="''" /> Increments</label>
-                                            <br/>
-                                        </td>
-                                        <td style="border-top-width: 0px !important;">
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.invertNegatives" ng-true-value="'invertNegatives'" ng-false-value="''" /> InvertNegatives</label>
-                                            <br/>
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.math" ng-true-value="'math'" ng-false-value="''" /> Math</label>
-                                            <br/>
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.negateConditionals" ng-true-value="'negateConditionals'" ng-false-value="''"
-                                                /> NegateConditionals</label>
-                                            <br/>
-                                        </td>
-                                        <td style="border-top-width: 0px !important;">
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.removeConditionals" ng-true-value="'removeConditionals'" ng-false-value="''"
-                                                /> RemoveConditionals</label>
-                                            <br/>
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.returnValues" ng-true-value="'returnValues'" ng-false-value="''" /> ReturnValues</label>
-                                            <br/>
-                                            <label>
-                                                <input type="checkbox" ng-model="mutation.js.switchCases" ng-true-value="'switchCases'" ng-false-value="''" /> SwitchCases</label>
-                                            <br/>
-                                        </td>
-                                    </tr>
-                                </table>
-                                </br>
-                                <label for="concurrency" class="col-sm-2 control-label">concurrency</label>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="concurrency" name="concurrency" placeholder="Concurrency of mutant runners [default: 1]"
-                                        ng-model="mutation.js.concurrency" min="0" value="1">
-                                </div>
-                                </br>
-                            </td>
-                            <td>
-                                <button class="btn btn-warning" type="button" ng-click="executeMutationTestingJS()">Execute
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div ng-include="'MutationTestingExecution.html'"></div>
             </uib-tab>
-            <uib-tab index="5" heading="MDROID + ">
+            <uib-tab index="5" heading="Historic mutation testing">
+                <div ng-include="'HistoricMutationTesting.html'"></div>
+            </uib-tab>
+            <uib-tab index="6" heading="MDROID + ">
                 <form action="" class="form-horizontal" novalidate>
                     <h2>Crear Proyecto de mutación</h2>
                     <div class="form-group">

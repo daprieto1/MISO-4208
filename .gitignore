@@ -12,6 +12,6 @@ TestAutomationTool/cucumber/node_modules
 TestAutomationTool/cucumber/features/test.feature
 TestAutomationTool/cucumber/errorShots
 TestAutomationTool/cucumber/results.xml
+TestAutomationTool/folderRepositories
 UHabits/test_servers/*
 diagrams/TestAutomationTool.asta.lock
-

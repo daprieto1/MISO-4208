@@ -9,6 +9,7 @@ var routes = function (Mutode) {
         .get((req, res) => {
             Mutode.find(function (err, mutodes) {
                 if (err) res.send(err)
+                console.log(mutodes)
                 res.json(mutodes);
             });
         })
