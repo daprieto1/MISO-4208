@@ -76,11 +76,16 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             }, err => console.log(err));
 
         $http.get('/api/mutation/').then(response =>{
-            $scope.mutodeResults = response.data.map(result => parseMutodeResults(result)).reverse(function(r1, r2){
+          var result = [];
+          for(var i=0;  i<response.data.length; i++){
+            var project = response.data[i];
+            project.executions = project.executions.map(execution => parseMutodeResults(execution)).reverse(function(r1, r2){
               return r1.timestamp -r2.timestamp;
             });
+            result.push(project);
+          }
 
-            console.log($scope.mutodeResults);
+          $scope.mutodeResults = result;
         }, err => console.log(err));
 
         $http.get('/api/monkey/').then(response =>{
@@ -198,7 +203,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
           result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
           return result;
         }
-        
+
         function parseMonkeyResults(result){
             result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
             result.error = parseInt(result.error);
