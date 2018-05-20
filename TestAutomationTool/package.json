@@ -13,7 +13,7 @@
     "url": "https://github.com/daprieto1/MISO-4208.git"
   },
   "dependencies": {
-    "aws-sdk": "^2.240.1",
+    "aws-sdk": "^2.243.1",
     "body-parser": "~1.5.2",
     "commander": "^2.14.1",
     "cypress": "^2.0.2",

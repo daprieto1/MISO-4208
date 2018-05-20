@@ -1,9 +1,48 @@
 var Mutode = require('./../models/Mutode');
 var Utils = require('./UtilsService');
+// Load the SDK for JavaScript
+var AWS = require('aws-sdk');
+// Set the region
+AWS.config.update({region: 'us-west-2'});
 
 var MutationService = {};
 
 var folderRepository = 'folderRepositories/'
+
+MutationService.saveQueue = mutationData =>{
+  var repositoryPath = mutationData.repository;
+  var lastSlash = repositoryPath.lastIndexOf("/");
+  var folder = repositoryPath.substring(lastSlash+1);
+  var point = folder.lastIndexOf(".");
+
+  if(point!=-1)
+    folder = folder.substring(0,point);
+
+  var gitFolder = folderRepository+folder;
+
+  var dataQueue = {
+        "repository":mutationData.repository,
+        "concurrency": mutationData.concurrency,
+        "mutators": mutationData.mutators,
+        "indexJS": mutationData.index!= undefined? mutationData.index:'',
+        "gitFolder": gitFolder
+      }
+ var sqs = new AWS.SQS({"accessKeyId":"AKIAIEACZYSRV56EUMKA", "secretAccessKey": "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", "region": "us-west-2"});
+ var params = {
+     MessageBody: JSON.stringify(dataQueue),
+     QueueUrl: "https://sqs.us-west-2.amazonaws.com/563508585557/ProjectsToRunMutationTesting.fifo",
+     MessageAttributes: {
+       someKey: { DataType: 'String', StringValue: "string"}
+     }
+   };
+console.log("sending to queue")
+ sqs.sendMessage(params, function(err, data) {
+   if (err) common.logError(err, err.stack); // an error occurred
+   else     common.log(data);           // successful response
+ });
+
+}
+
 MutationService.ExecuteMutode = mutationData => {
     return new Promise((resolve, reject) => {
         var repositoryPath = mutationData.repository;
