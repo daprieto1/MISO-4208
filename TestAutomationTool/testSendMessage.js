@@ -2,7 +2,7 @@
 var AWS = require('aws-sdk');
 // Set the region
 AWS.config.update({region: 'us-west-2'});
-var sqs = new AWS.SQS({"accessKeyId":"AKIAISQMQIMWYVK3ILTA", "secretAccessKey": "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", "region": "us-west-2"});
+var sqs = new AWS.SQS({"accessKeyId":"", "secretAccessKey": "", "region": "us-west-2"});
 var url = "https://sqs.us-west-2.amazonaws.com/563508585557/ProjectsToRunMutationTesting.fifo";
 
 function sendMessage(value){
