@@ -1,9 +1,10 @@
 // Load the SDK for JavaScript
 var AWS = require('aws-sdk');
 // Set the region
-AWS.config.update({region: 'us-west-2'});
-var sqs = new AWS.SQS({"accessKeyId":"", "secretAccessKey": "", "region": "us-west-2"});
-var url = "https://sqs.us-west-2.amazonaws.com/563508585557/ProjectsToRunMutationTesting.fifo";
+AWS.config.update({region: 'us-east-2'});
+var sqs = new AWS.SQS({"accessKeyId":"", "secretAccessKey": "", "region": "us-east-2"});
+var url = "https://sqs.us-east-2.amazonaws.com/401211950800/MutationQueue";
+
 
 function sendMessage(value){
   var folderRepository = 'folderRepositories/'
@@ -36,14 +37,17 @@ function sendMessage(value){
    var params = {
        MessageBody: JSON.stringify(dataQueue),
        QueueUrl: url,
-       MessageGroupId: messageGroupId,
-       MessageDeduplicationId: ""+(new Date()).getTime(),
        MessageAttributes: {}
      };
 
    sqs.sendMessage(params, function(err, data) {
      if (err) console.log(err+", "+err.stack); // an error occurred
-     else     console.log("enviado:::\n"+data+"\n----------------------------------------------------------------\n");           // successful response
+     else{
+        console.log("enviado:::");           // successful response
+        console.log(data);
+        console.log("\n-----------------------------------------------------------------------\n");
+      }
+
    });
 }
 
@@ -56,7 +60,9 @@ function getMessage(){
    if (err) {
    console.log("Receive Error", err);
  } else if (data.Messages) {
-    console.log("Recibiendo::.\n"+data+"\n----------------------------------------------------------------------------\n");
+    console.log("Recibiendo:::");
+    console.log(data);
+    console.log("\n-----------------------------------------------------------------------\n");
    var deleteParams = {
      QueueUrl: url,
      ReceiptHandle: data.Messages[0].ReceiptHandle
@@ -72,8 +78,9 @@ function getMessage(){
  });
 }
 
-sendMessage("1");
-sendMessage("2");
-sendMessage("3");
+
+//sendMessage("1");
+//sendMessage("2");
+//sendMessage("3");
 getMessage();
-getMessage();
+//getMessage();

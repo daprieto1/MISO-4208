@@ -15,3 +15,5 @@ TestAutomationTool/cucumber/results.xml
 TestAutomationTool/folderRepositories
 UHabits/test_servers/*
 diagrams/TestAutomationTool.asta.lock
+MutationService/node_modules/*
+MutationService/package-lock.json

@@ -49,7 +49,7 @@ var routes = function (Mutode) {
             if(mutode.mutators.length==0)
               res.status(500).send('Select at least one mutator');
 
-            MutationService.saveQueue(mutode)
+            MutationService.SaveQueue(mutode)
             .then(() => res.status(200).send('ok'))
             .catch(err => {
                 console.log(err);
