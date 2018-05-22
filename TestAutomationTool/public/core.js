@@ -52,21 +52,20 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
 
         };
 
-        $scope.mutation={
-          js:{
-            repository:'',
-            index:'',
-            conditionalsBoundary:'',
-            deletion:'',
-            increments:'',
-            invertNegatives:'',
-            math:'',
-            negateConditionals:'',
-            removeConditionals:'',
-            returnValues:'',
-            switchCases:'',
-            concurrency:1
-          }
+        $scope.mutation = {
+            js: {
+                repository: '',
+                conditionalsBoundary: '',
+                deletion: '',
+                increments: '',
+                invertNegatives: '',
+                math: '',
+                negateConditionals: '',
+                removeConditionals: '',
+                returnValues: '',
+                switchCases: '',
+                concurrency: 1
+            }
         }
 
         $http.get('/api/testsuite')
@@ -79,21 +78,69 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 $scope.executions = response.data.map(execution => parseExecution(execution));
             }, err => console.log(err));
 
+
+        $http.get('/api/mdroid')
+            .then(response => {
+                $scope.mdroidExecutions = response.data;
+                console.log($scope.mdroidExecutions)
+            }, err => console.log(err));
+
         $http.get('/api/mutation/').then(response =>{
-            $scope.mutodeResults = response.data.map(result => parseMutodeResults(result)).reverse(function(r1, r2){
+          var result = [];
+          for(var i=0;  i<response.data.length; i++){
+            var project = response.data[i];
+            project.executions = project.executions.map(execution => parseMutodeResults(execution)).reverse(function(r1, r2){
               return r1.timestamp -r2.timestamp;
             });
+            result.push(project);
+          }
 
-            console.log($scope.mutodeResults);
+          $scope.mutodeResults = result;
         }, err => console.log(err));
         
         loadInfoHistoricMonkey();
 
+
         $scope.selectedExecution = undefined;
+        $scope.selectedME = undefined;
+        $scope.mdroid = {}
+
+        $scope.createME = () => {
+            $http.post('/api/mdroid', $scope.mdroid)
+                .then(response => {
+                    console.log(response.data)
+                }, err => console.log(err));
+        }
+        $scope.selectME = (me) => { $scope.selectedME = me }
+        $scope.showMoreMutant = (mutant) => {
+            $scope.selectedMutant = mutant;
+            $http.get(`/api/mdroid/${$scope.selectedME._id}/codeline/${$scope.selectedMutant.id}`)
+                .then(response => {
+                    var one = response.data.original,
+                        other = response.data.change,
+                        color = '',
+                        span = null;
+
+                    var diff = JsDiff.diffChars(one, other),
+                        display = document.getElementById(`display${mutant.id}`),
+                        fragment = document.createDocumentFragment();
+
+                    diff.forEach(function (part) {
+                        color = part.added ? 'green' :
+                            part.removed ? 'red' : 'grey';
+                        span = document.createElement('span');
+                        span.style.color = color;
+                        span.appendChild(document
+                            .createTextNode(part.value));
+                        fragment.appendChild(span);
+                    });
+                    display.appendChild(fragment);
+                }, err => console.log(err));
+        }
 
         $scope.selectExecution = (execution) => {
             $scope.selectedExecution = execution;
-            $http.get(`/api/execution/${execution._id}`)
+            $http.get(`/api/execution/execution._id}`)
                 .then(response => {
                     $scope.selectedExecution = parseExecution(response.data);
                     $scope.selectedExecution.failures = parseInt($scope.selectedExecution.failures)
@@ -115,40 +162,36 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
         }
 
         $scope.execute = testSuite => {
-            $http.post(`/api/testsuite/${testSuite._id}/execute/${testSuite.providerName}`);
+            $http.post(`/api/testsuite/testSuite._id}/execute/testSuite.providerName}`);
         }
 
-        $scope.executeMutationTestingJS = () =>{
-          console.log("mutation testing "+$scope.mutation.js.repository);
-          var data = {};
-          data.repository = $scope.mutation.js.repository;
-          data.index = $scope.mutation.js.index;
-          data.conditionalsBoundary = $scope.mutation.js.conditionalsBoundary;
-          data.deletion = $scope.mutation.js.deletion;
-          data.increments = $scope.mutation.js.increments;
-          data.invertNegatives = $scope.mutation.js.invertNegatives;
-          data.math = $scope.mutation.js.math;
-          data.negateConditionals = $scope.mutation.js.negateConditionals;
-          data.removeConditionals = $scope.mutation.js.removeConditionals;
-          data.returnValues = $scope.mutation.js.returnValues;
-          data.switchCases = $scope.mutation.js.switchCases;
-          data.concurrency = $scope.mutation.js.concurrency;
+        $scope.executeMutationTestingJS = () => {
+            console.log("mutation testing " + $scope.mutation.js.repository);
+            var data = {};
+            data.repository = $scope.mutation.js.repository;
+            data.conditionalsBoundary = $scope.mutation.js.conditionalsBoundary;
+            data.deletion = $scope.mutation.js.deletion;
+            data.increments = $scope.mutation.js.increments;
+            data.invertNegatives = $scope.mutation.js.invertNegatives;
+            data.math = $scope.mutation.js.math;
+            data.negateConditionals = $scope.mutation.js.negateConditionals;
+            data.removeConditionals = $scope.mutation.js.removeConditionals;
+            data.returnValues = $scope.mutation.js.returnValues;
+            data.switchCases = $scope.mutation.js.switchCases;
+            data.concurrency = $scope.mutation.js.concurrency;
 
-          $http.post('/api/mutation/', data);
+            $http.post('/api/mutation/', data);
+
         }
 
         $scope.generateRandomTestingCommand = () => {
             var command = 'adb shell monkey'
             for (var key in $scope.androidRandomTest) {
-                var element = $scope.androidRandomTest[key];
-                if(element.visible){
-                    if(key != 'verbosity')
-                        command += ` ${element.command} ${element.value}`;
-                    else if( element.value)
-                        command += ` ${element.command}`
+                var element = $scope.androidRandomTest[key]
+                if (element.visible) {
+                    command += ` element.command} element.value}`
                 }
             }
-            
             if($scope.androidRandomTest.eventcount == undefined){
                 $scope.ErrorCommand = "Enter the event count!";
                 return;
@@ -199,11 +242,12 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             return execution;
         }
 
+
         function parseMutodeResults(result){
           result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
           return result;
         }
-        
+
         function parseMonkeyResults(result){
             result.timestamp = (new Date(result.timestamp)).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
             result.error = parseInt(result.error);

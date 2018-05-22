@@ -27,6 +27,7 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/chart.js/dist/Chart.min.js"></script>
     <script src="core.js"></script>
+    <script src="bower_components/jsdiff/diff.min.js"></script>
 
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
@@ -158,110 +159,125 @@
                 <div ng-include="'HistoricRandomTest.html'"></div>
             </uib-tab>
             <uib-tab index="4" heading="Mutation testing">
-                <table id="mutationtesting" class="table table-striped">
-                    <tbody>
+                <div ng-include="'MutationTestingExecution.html'"></div>
+            </uib-tab>
+            <uib-tab index="5" heading="Historic mutation testing">
+                <div ng-include="'HistoricMutationTesting.html'"></div>
+            </uib-tab>
+            <uib-tab index="6" heading="MDROID + ">
+                <form action="" class="form-horizontal" novalidate>
+                    <h2>Crear Proyecto de mutación</h2>
+                    <div class="form-group">
+                        <div class="col-sm-1">
+                        </div>
+                        <label for="eventcount" class="col-sm-2 control-label">
+                            Url repositorio de GitHub
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="urlrepo" name="urlrepo" aria-describedby="help-eventcount" placeholder="https://github.com/chalk/chalk"
+                                ng-model="mdroid.gitUrl" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-1">
+                        </div>
+                        <label for="eventcount" class="col-sm-2 control-label">
+                            Ruta relativa a las fuentes
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="src" name="src" aria-describedby="help-eventcount" placeholder="AppFoo/src/"
+                                ng-model="mdroid.srcPath" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-1">
+                        </div>
+                        <label for="eventcount" class="col-sm-2 control-label">
+                            Commando de pruebas
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="testcommand" name="testcommand" aria-describedby="help-eventcount" placeholder="gradle test"
+                                ng-model="mdroid.testCommand" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-1">
+                        </div>
+                        <label for="eventcount" class="col-sm-2 control-label">
+                            Commando de compilación
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="testcommand" name="testcommand" aria-describedby="help-eventcount" placeholder="gradle test"
+                                ng-model="mdroid.compileCommand" required>
+                        </div>
+                    </div>
+
+                    <center>
+                        <button ng-click="createME()" class="btn btn-warning" type="button">Crear</button>
+                    </center>
+                </form>
+
+                <table class="table">
+                    <thead>
                         <tr>
+                            <th>id</th>
+                            <th>repositorio</th>
+                            <th># mutantes</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="me in mdroidExecutions">
+                        <tr>
+                            <td>{{me._id}}</td>
+                            <td>{{me.gitUrl}}</td>
+                            <td>{{me.mutants.length}}</td>
                             <td>
-                              <label for="repoJSPath" class="col-sm-2 control-label">
-                                  JS Mutation
-                              </label>
-                              <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="repoJSPath" name="repoPath"  placeholder="repository URL" ng-model="mutation.js.repository" required>
-                              </div>
-                              </br></br>
-                              <label for="repoJSPath" class="col-sm-2 control-label">
-                                  Path index.js file
-                              </label>
-                              <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="indexPath" name="indexPath"  placeholder="index.js path" ng-model="mutation.js.index" required>
-                              </div>
-                              </br></br></br>
-                              <label for ="mutatorsTable" class="col-sm-2 control-label">Mutators</label>
-                                <table id="mutatorsTable">
-                                  <tr>
-                                    <td style="border-top-width: 0px !important;">
-                                      <label><input type="checkbox" ng-model="mutation.js.conditionalsBoundary" ng-true-value="'conditionalsBoundary'" ng-false-value="''"/> ConditionalsBoundary</label><br/>
-                                      <label><input type="checkbox" ng-model="mutation.js.deletion" ng-true-value="'deletion'" ng-false-value="''"/> Deletion </label><br/>
-                                      <label><input type="checkbox" ng-model="mutation.js.increments" ng-true-value="'increments'" ng-false-value="''"/> Increments</label><br/>
-                                    </td>
-                                    <td style="border-top-width: 0px !important;">
-                                      <label><input type="checkbox" ng-model="mutation.js.invertNegatives" ng-true-value="'invertNegatives'" ng-false-value="''"/> InvertNegatives</label><br/>
-                                      <label><input type="checkbox" ng-model="mutation.js.math" ng-true-value="'math'" ng-false-value="''"/> Math</label><br/>
-                                      <label><input type="checkbox" ng-model="mutation.js.negateConditionals" ng-true-value="'negateConditionals'" ng-false-value="''"/> NegateConditionals</label><br/>
-                                    </td>
-                                    <td style="border-top-width: 0px !important;">
-                                      <label><input type="checkbox" ng-model="mutation.js.removeConditionals" ng-true-value="'removeConditionals'" ng-false-value="''"/> RemoveConditionals</label><br/>
-                                      <label><input type="checkbox" ng-model="mutation.js.returnValues" ng-true-value="'returnValues'" ng-false-value="''"/> ReturnValues</label><br/>
-                                      <label><input type="checkbox" ng-model="mutation.js.switchCases" ng-true-value="'switchCases'" ng-false-value="''"/> SwitchCases</label><br/>
-                                    </td>
-                                  </tr>
-                                </table>
-                                </br>
-                                <label for ="concurrency" class="col-sm-2 control-label">concurrency</label>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="concurrency" name="concurrency"  placeholder="Concurrency of mutant runners [default: 1]" ng-model="mutation.js.concurrency" min="0" value="1">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-default" ng-click="selectME(me)">Ver Más</button>
+                                    <button type="button" class="btn btn-default">Eliminar</button>
                                 </div>
-                              </br>
                             </td>
-                            <td>
-                                <button class="btn btn-warning" type="button" ng-click="executeMutationTestingJS()">Execute
-                                </button>
+                        </tr>
+                        <tr ng-if="selectedME._id === me._id">
+                            <td colspan="4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th># mutante</th>
+                                            <th>Tipo de mutante</th>
+                                            <th>Location</th>
+                                            <th>File</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="mutant in me.mutants track by $index">
+                                        <tr>
+                                            <td>Mutante {{mutant.id}}</td>
+                                            <td>{{mutant.type}}</td>
+                                            <td>line {{mutant.line}}</td>
+                                            <td>{{mutant.path}}</td>
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="...">
+                                                    <button ng-click="showMoreMutant(mutant)" type="button" class="btn btn-default">Ver Más</button>
+                                                    <button type="button" class="btn btn-default">Ejecutar</button>
+                                                    <button type="button" class="btn btn-default">Eliminar</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="selectedMutant.id === mutant.id">
+                                            <td colspan="5">
+                                                <div id="display{{$index + 1}}"></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </uib-tab>
-            <uib-tab index="5" heading="Historic Mutation Testing">
-                <table id="mutodeResults" class="table table-striped">
-                    <tbody ng-repeat="mutodeResult in mutodeResults">
-                      <tr>
-                        <td>
-                            <p>
-                                <strong>{{mutodeResult.project}}</strong>
-                            </p>
-                            <p>Execution time: {{mutodeResult.timestamp}}</p>
-                        </td>
-                        <td>
-                          <p>
-                              Total Mutants: <strong> {{mutodeResult.totalMutants}}</strong>
-                          </p>
-                          Coverage:
-                          <span class="label label-success" ng-if="mutodeResult.coverage == 100">
-                              <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.coverage}}%</span>
-                          <span class="label label-danger" ng-if="mutodeResult.coverage < 100">
-                              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.coverage}}%</span>
 
-                          </br>
-                          Killed:
-                          <span class="label label-success" ng-if="mutodeResult.killed == mutodeResult.totalMutants">
-                              <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.kiled}}</span>
-                          <span class="label label-danger" ng-if="mutodeResult.killed < mutodeResult.totalMutants">
-                              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.killed}}</span>
 
-                          </br>
-                            Survived:
-                            <span class="label label-success" ng-if="mutodeResult.survived == 0">
-                                <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.survived}}</span>
-                            <span class="label label-danger" ng-if="mutodeResult.survived > 0">
-                                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.survived}}</span>
-
-                            </br>
-                            Discarded:
-                            <span class="label label-success" ng-if="mutodeResult.wereDiscarded == 0">
-                                <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{mutodeResult.wereDiscarded}}</span>
-                            <span class="label label-danger" ng-if="mutodeResult.wereDiscarded > 0">
-                                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> {{mutodeResult.wereDiscarded}}</span>
-
-                        </td>
-                        <td>
-                          <div ng-repeat="mutant in mutodeResult.mutants.split(' ')">
-                            <strong>{{mutant}}</strong>
-                          </div>
-                        </td>
-
-                    </tr>
-                    </tbody>
-                </table>
             </uib-tab>
         </uib-tabset>
 

@@ -1,0 +1,17 @@
+{
+  "name": "mutationservice",
+  "version": "1.0.0",
+  "description": "script to run mutation projects saved on queue of AWS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.243.1",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.1.1",
+    "node-run-cmd": "^1.0.1"
+  }
+}

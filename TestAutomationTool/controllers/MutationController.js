@@ -9,7 +9,24 @@ var routes = function (Mutode) {
         .get((req, res) => {
             Mutode.find(function (err, mutodes) {
                 if (err) res.send(err)
-                res.json(mutodes);
+                var result = [];
+                var existProject, resultIndex;
+                for(var i=0; i<mutodes.length;i++){
+                  existProject=false;
+
+                  var mutant = mutodes[i];
+                  for(var iRes=0;iRes<result.length;iRes++){
+                    if(result[iRes].project == mutant.project){
+                      resultIndex = iRes;
+                      existProject = true;
+                    }
+                  }
+                  if(existProject)
+                    result[resultIndex].executions.push(mutant);
+                  else
+                    result.push({project:mutant.project, executions:[mutant]});
+                }
+                res.json(result);
             });
         })
         .post((req, res) => {
@@ -32,7 +49,7 @@ var routes = function (Mutode) {
             if(mutode.mutators.length==0)
               res.status(500).send('Select at least one mutator');
 
-            MutationService.ExecuteMutode(mutode)
+            MutationService.SaveQueue(mutode)
             .then(() => res.status(200).send('ok'))
             .catch(err => {
                 console.log(err);
