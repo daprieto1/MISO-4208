@@ -66,7 +66,7 @@ cron.schedule('*/1 * * * *', () => {
             mensajeRecibido = data.Messages[0];
             console.log(data);
             datos = JSON.parse(mensajeRecibido.Body);
-            MonkeyService.execute(datos.dato).then(() => {
+            MonkeyService.execute(datos.dato, datos.timestamp).then(() => {
                 console.log("Fin monkey OK");
                 deleteMsg(mensajeRecibido.ReceiptHandle).then(() => {
                     isEjecutando = false;

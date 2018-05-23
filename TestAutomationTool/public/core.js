@@ -223,17 +223,18 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
                 $scope.ErrorCommand = "First generates the command!";
                 return;
             }
-            var comando = {};
-            comando.monkeyCommand = $scope.command;
-            console.log(comando);
-            $http.post('/api/monkey/', comando);
+            $scope.executeMonkeyAgain($scope.command);
         }
         $scope.executeMonkeyAgain = (commandSend) => {
             
             var comando = {};
             comando.monkeyCommand = commandSend;
             console.log(commandSend);
-            $http.post('/api/monkey/', comando);
+            $http.post('/api/monkey/', comando).then(response => {
+                console.log(response)
+                var dlgElem = angular.element(".modal-peticion");
+                dlgElem.modal("show");
+            }, err => console.log(err));
         }
         $scope.printValue = (posicion, valor) => {
             $scope.conta[posicion] = valor;

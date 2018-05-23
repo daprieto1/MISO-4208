@@ -15,23 +15,33 @@ var url = "https://sqs.us-east-2.amazonaws.com/337432867796/smart-tools-app";
 var MonkeyService = {};
 MonkeyService.sendSQS = (dato) => {
   return new Promise((resolve, reject) => {
-    
+    var timestamp = new Date().getTime();
     var dataQueue = {
-      "dato": dato
+      "dato": dato,
+      "timestamp": timestamp
     }
     var params = {
       MessageBody: JSON.stringify(dataQueue),
       QueueUrl: url,
       MessageAttributes: {}
     };
-
-    sqs.sendMessage(params, function(err, data) {
-      if (err) console.log(err+" ---- "+err.stack); // an error occurred
-      else     console.log(data);           // successful response
+    var resultExecution = {"command":dato, "error":" ", "file":" ", "timestamp": timestamp};
+    MonkeyService.saveReport(resultExecution)
+    .then(() =>{ 
+      sqs.sendMessage(params, function(err, data) {
+        if (err) 
+          reject(err); // an error occurred
+        console.log(data);           // successful response
+        resolve();
+      });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).send(err);
     });
   });
 };
-MonkeyService.execute = (dato) => {
+MonkeyService.execute = (dato, timestamp) => {
     return new Promise((resolve, reject) => {
         var path = require("path");
         var comando = path.join(process.env.ANDROID_HOME,'platform-tools' , dato.replace("/", path.sep));
@@ -40,9 +50,9 @@ MonkeyService.execute = (dato) => {
         var fileName = (new Date()).getTime().toString() + '.txt';
         var pathFile = path.join(targetFolder, fileName);
         var resultado = "";
+        MonkeyService.markToRunning({"timestamp":timestamp});
         nrc.run(emulator);    
         // Se esperan 30 segundos para asegurar el que el emulador este arriba.
-        
         Utils.createFolder(targetFolder).then(() =>{
           console.log(comando);
           setTimeout(function(){
@@ -60,10 +70,11 @@ MonkeyService.execute = (dato) => {
             console.log("codigo de salida: " + data);
             Utils.appendFile(pathFile, "Codigo salida: " + data);
             console.log(resultado);
-            var resultExecution = {"command":dato, "error":data, "file":fileName};
-            MonkeyService.saveReport(resultExecution)
+            var resultExecution = {"error":data, "file":fileName, "timestamp":timestamp};
+            //MonkeyService.saveReport(resultExecution)
+            MonkeyService.updateReport(resultExecution)
             .then(() => {
-                console.log('Guardado OK');
+                console.log('Actualizado OK');
                 resolve('OK');
               })
             .catch(err => {
@@ -79,16 +90,41 @@ MonkeyService.execute = (dato) => {
 MonkeyService.saveReport = report =>{
   return new Promise((resolve, reject) => {
     var monkeyReport = new Monkey({
-      timestamp: (new Date()).getTime(),
+      timestamp: report.timestamp,
       command: report.command,
       error: report.error,
       file: report.file,
+      estado: 0
     });
 
     monkeyReport.save((err, newMonkeyReport) => {
         if (err) reject(err);
         resolve(newMonkeyReport);
     });
+  });
+}
+
+MonkeyService.updateReport = report =>{
+  return new Promise((resolve, reject) => {
+    Monkey.update({ timestamp: report.timestamp},
+      {estado: 2, file: report.file, error: report.error},
+      function (err, raw) {
+        if (err)  reject(err);
+        console.log('the update response ', raw);
+        resolve(err);
+      });
+  });
+}
+
+MonkeyService.markToRunning = report =>{
+  return new Promise((resolve, reject) => {
+    Monkey.update({ timestamp: report.timestamp},
+      {estado: 1},
+      function (err, raw) {
+        if (err)  reject(err);
+        console.log('the update mark response ', raw);
+        resolve(err);
+      });
   });
 }
 

@@ -5,7 +5,8 @@ var MonkeySchema = new Schema({
     timestamp: Number,
     command: String,
     error: Number,
-    file: String
+    file: String,
+    estado: Number
 });
 
 module.exports = mongoose.model('Monkey', MonkeySchema);

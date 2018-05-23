@@ -16,7 +16,19 @@
                 <p>Execution time: {{ monkeyResult.timestamp }}</p>
                 <button class="btn btn-warning" type="button" ng-click="executeMonkeyAgain(monkeyResult.command)">Execute again</button>
             </td>
-            <td>
+            <td ng-if="monkeyResult.estado == 0">
+                <span class="label label-warning">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    pending
+                </span>
+            </td>
+            <td ng-if="monkeyResult.estado == 1">
+                <span class="label label-info">
+                    <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                    running
+                </span>
+            </td>
+            <td ng-if="monkeyResult.estado != 0 &&  monkeyResult.estado != 1">
                 <span class="label label-success" ng-if="monkeyResult.error == 0">
                     <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                     success
@@ -27,7 +39,7 @@
                 </span>
             </td>
             <td>
-                <a href="/api/monkey/{{monkeyResult.file}}" rel="noopener noreferrer" TARGET="_blank">Log de Ejecución</a>
+                <a ng-if="monkeyResult.estado != 0 &&  monkeyResult.estado != 1" href="/api/monkey/{{monkeyResult.file}}" rel="noopener noreferrer" TARGET="_blank">Log de Ejecución</a>
             </td>
         </tr>
     </tbody>
