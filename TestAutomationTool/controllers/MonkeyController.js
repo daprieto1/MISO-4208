@@ -15,7 +15,7 @@ var routes = function (Monkey) {
         .post((req, res) => {
             monkeyCommand = req.body.monkeyCommand;
             console.log(monkeyCommand);
-            MonkeyService.execute(monkeyCommand)
+            MonkeyService.sendSQS(monkeyCommand)//execute(monkeyCommand)
             .then(() => res.status(200).send('OK'))
             .catch(err => {
                 console.log(err);

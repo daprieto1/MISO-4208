@@ -74,7 +74,7 @@ UtilsService.appendFile = (path, content) => {
     try {
         fs.appendFileSync(path, content);
     } catch (err) {
-        console.log('Error escribiendo en archivo:' + path);
+        console.log('Error escribiendo en archivo:' + path + ' error: ' + err);
     }
 };
 
