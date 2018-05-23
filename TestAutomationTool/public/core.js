@@ -185,13 +185,18 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
         }
 
         $scope.generateRandomTestingCommand = () => {
-            var command = 'adb shell monkey'
+            var command = 'adb shell monkey';
+            
             for (var key in $scope.androidRandomTest) {
-                var element = $scope.androidRandomTest[key]
-                if (element.visible) {
-                    command += ` element.command} element.value}`
+                var element = $scope.androidRandomTest[key];
+                if(element.visible){
+                    if(key != 'verbosity')
+                        command += ` ${element.command} ${element.value}`;
+                    else if( element.value)
+                        command += ` ${element.command}`
                 }
             }
+
             if($scope.androidRandomTest.eventcount == undefined){
                 $scope.ErrorCommand = "Enter the event count!";
                 return;
