@@ -24,6 +24,7 @@ MutationService.SaveQueue = mutationData =>{
     var gitFolder = folderRepository+folder+new Date().getTime();
 
     var dataQueue = {
+      "projectName":folder,
       "repository":mutationData.repository,
       "concurrency": mutationData.concurrency,
       "mutators": mutationData.mutators,

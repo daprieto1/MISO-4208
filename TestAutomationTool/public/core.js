@@ -169,6 +169,7 @@ angular.module('automationTestingTool', ['ui.bootstrap'])
             console.log("mutation testing " + $scope.mutation.js.repository);
             var data = {};
             data.repository = $scope.mutation.js.repository;
+            data.index = $scope.mutation.js.index;
             data.conditionalsBoundary = $scope.mutation.js.conditionalsBoundary;
             data.deletion = $scope.mutation.js.deletion;
             data.increments = $scope.mutation.js.increments;

@@ -6,7 +6,8 @@ mongoose.connect(mongoUri, function (err, res) {
     else console.log('Succeeded connected');
 }).catch(err => console.log(err));
 
-
 var RunnerMutations = require('./RunnerMutations');
-
-RunnerMutations.testSave();
+RunnerMutations.processQueue();
+setInterval(function(){
+  RunnerMutations.processQueue();
+},180000);
